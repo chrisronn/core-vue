@@ -1,28 +1,53 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <router-view
+        :customers="customers"/>        
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+//import _ from 'lodash';
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      customers: [],
+      allCustomers: []
+    }
+  },
+  methods: {
+
+    fetchCustomers () {
+        var url = this.$dataUrlCustomerRead;
+        console.log("URL" + url);
+        this.axios
+        .get(url)
+        .then(response => {
+          this.allCustomers = response.data;
+          this.customers = this.allCustomers;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    setLayoutHeights () {
+        console.log("TODO: set heights");
+    }
+  },  
+  mounted() {
+    this.fetchCustomers();    
+
+    window.addEventListener('resize', this.setLayoutHeights);   
+  },
+  beforeDestroy () {
+
+      window.removeEventListener('resize', this.setLayoutHeights)
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>

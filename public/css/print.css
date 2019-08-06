@@ -1,0 +1,145 @@
+
+/*
+ * Overriding styles for creating branded skin 
+ */
+
+/*
+ * =====================================================
+ * Overriding Bootstrap
+ * =====================================================
+ */
+
+body {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #212529;
+}
+
+a {
+  color: #3c8dbc;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #449dd0;
+  text-decoration: none;
+}
+
+.page-item.active .page-link {
+    color: #fff;
+    background-color: #3c8dbc;
+    border-color: #3c8dbc;
+}
+
+.table.table-hover tbody tr:hover { 
+	background-color: #d9edf7; 
+}
+
+.form-control:focus {
+  border-color: #3c8dbc;
+  box-shadow: none;
+}
+.btn-primary {
+  background-color: #3c8dbc;
+  border-color: #3c8dbc;
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.hover {
+  border-color: #449dd0;
+  background-color: #449dd0;
+}
+
+.btn-link {
+    color: #3c8dbc;
+}
+.btn-link:hover,
+.btn-link:active,
+.btn-link.hover {
+  color: #449dd0;
+}
+
+/*
+ * =====================================================
+ * Overriding layout.css
+ * =====================================================
+ */
+ 
+.brand-link {
+  color: #fff;
+  background-color: #367fa9;  
+}
+
+.brand-link:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.brand-link {
+	background-image: url("../img/logo.png");
+	background-size: 160px;	
+	background-repeat: no-repeat;
+	background-position: center; 
+}
+.main-header .navbar {
+	color: #ffffff;
+	background-color: #3c8dbc;
+}
+
+.main-header .navbar-nav .nav-item {
+    color: #ffffff;
+    background-color: #3c8dbc;
+}
+
+.main-header .navbar-collapse {
+    color: #ffffff;
+    background-color: #3c8dbc;
+}
+
+.main-header .navbar-nav {
+    color: #ffffff;
+    background-color: #3c8dbc;
+}
+
+.main-header .navbar a {
+	color: #ffffff;
+}
+.main-header .nav-link:hover, .main-header .nav-link:focus {
+  background-color: #449dd0;
+}
+
+.main-header .nav-header {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 23px;
+    display: block;    
+	position: relative;
+	height: 2.5rem;
+	padding: 3px 15px 0 0;
+    text-transform: uppercase;
+}
+
+.content-wrapper {
+  background: #f4f6f9;
+}
+
+.main-sidebar {
+    background-color: #333;
+}
+
+.card-primary.card-outline {
+  border-top: 3px solid #3c8dbc;
+}
+
+.card-primary:not(.card-outline) .card-header {
+  background-color: #3c8dbc;
+  color: #ffffff;
+  border-bottom: 0;
+}
+
+.icon-loader {
+	color: #367fa9;	
+}
+
+
+
+
