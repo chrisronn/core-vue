@@ -17,7 +17,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(customer,i) in customers" v-bind:key="i">
+              <tr v-for="(customer,i) in $store.getters.customers" v-bind:key="i">
                 <td>{{customer.id}}</td>
                 <td><b><router-link :to="{name: 'customercard', params: {customerId: customer.id}}">{{customer.name}}</router-link></b></td>
                 <td>{{customer.address}}</td>
@@ -49,8 +49,7 @@ export default {
       SiteHeader,
       ContentRight,
       SiteFooter
-  }, 
-  props: ["customers"]
+  }
 }
 </script>
 

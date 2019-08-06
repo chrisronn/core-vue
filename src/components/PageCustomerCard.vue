@@ -37,37 +37,25 @@ export default {
         ContentRight,
         SiteFooter
     }, 
-    data () {
-      
-      return {
-        emptyCustomer: {
-            "id": "",        
-            "name": "",
-            "address": "",        
-            "zipcode": "",
-            "city": "",
-            "phone": "",
-            "mobilephone": "",
-            "email": ""
-        }
-      }
+    data () {      
+      return {}
     },
     computed: {
 
       customer: function() {
         if(this.customerId) {          
           var id = this.customerId;
-          var customerInList = this.customers.find(function (el) {
+          var customerInList = this.$store.getters.customers.find(function (el) {
               return el.id==id;
           });
           if(customerInList) {          
             return customerInList;
           }
         }
-        return this.emptyCustomer;
+        return this.$store.getters.emptyCustomer;
       }
     },
-    props: ["customerId","customers"],
+    props: ["customerId"],
 }
 </script>
 

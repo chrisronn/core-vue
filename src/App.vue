@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-      <router-view
-        :customers="customers"/>        
+      <router-view />        
   </div>
 </template>
 
@@ -12,10 +11,7 @@
 export default {
   name: 'app',
   data() {
-    return {
-      customers: [],
-      allCustomers: []
-    }
+    return {}
   },
   methods: {
 
@@ -25,8 +21,9 @@ export default {
         this.axios
         .get(url)
         .then(response => {
-          this.allCustomers = response.data;
-          this.customers = this.allCustomers;
+          this.$store.commit('setCustomers', response.data)
+          //this.allCustomers = response.data;
+          //this.customers = this.allCustomers;
         })
         .catch(error => {
           console.log(error);
