@@ -3,7 +3,7 @@ import App from './App.vue'
 import VueRouter from "vue-router";
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-//import jQuery from 'jquery'
+import jQuery from 'jquery'
 
 import "bootstrap"
 import "bootstrap/dist/css/bootstrap.css"
@@ -19,8 +19,8 @@ Vue.prototype.$dataUrlCustomerRead = process.env.VUE_APP_URL_DATA_CUSTOMER_READ
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter)
 
-//global.jQuery = jQuery
-//global.$ = jQuery
+global.jQuery = jQuery
+global.$ = jQuery
 
 import '@/assets/css/layout.css'
 import '@/assets/css/skin.css'

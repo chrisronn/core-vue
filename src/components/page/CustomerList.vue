@@ -3,20 +3,20 @@
   <section class="content">
     <div class="container-fluid">
 
-<table id="customer-table" class="table table-bordered mt-3">
-      <thead>
-        <tr>
-            <th>ID</th>
-            <th>Kund</th>
-            <th>Adress</th>
-            <th>Ort</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+      <!--table id="customer-table" class="table table-bordered mt-3">
+        <thead>
+          <tr>
+              <th>ID</th>
+              <th>Kund</th>
+              <th>Adress</th>
+              <th>Ort</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table-->
 
-      <!--table class="table table-bordered mt-3">
+      <table class="table table-bordered mt-3">
         <thead>
           <tr>
             <th>ID</th>
@@ -33,25 +33,18 @@
             <td>{{customer.city}}</td>
           </tr>
         </tbody>
-      </table--> 
+      </table> 
     </div>
   </section>
 
 </template>
 
 <script>
-//import { maxHeaderSize } from 'http';
-
-//var $ = require( 'jquery' );
-//require( 'datatables.net' )( window, $ );
-//require( 'datatables.net-bs4' )( window, $ );
-//require( 'datatables.net-responsive' )( window, $ );
-//require( 'datatables.net-responsive-bs4' )( window, $ );
 
 export default {
   name: 'CustomerList',
   created: function () {
-    this.$store.commit('toggleSidebar', false);
+    this.$store.commit('toggleSidebar', false);   
   },
   components: {},
   data () {      
@@ -60,7 +53,8 @@ export default {
     }
   },
   mounted() {
-
+    
+    /*
     this.dataTable = $('#customer-table').DataTable({});
     
     this.$store.getters.customers.forEach(customer=>{
@@ -71,7 +65,7 @@ export default {
         customer.city
       ]).draw(false) 
     })
-
+    */
   }
 }
 </script>

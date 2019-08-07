@@ -7,6 +7,16 @@
 <script>
 
 //import _ from 'lodash';
+/*
+window.$ = require('jquery')
+window.JQuery = require('jquery')
+
+var $ = require( 'jquery' );
+require( 'datatables.net' )( window, $ );
+require( 'datatables.net-bs4' )( window, $ );
+require( 'datatables.net-responsive' )( window, $ );
+require( 'datatables.net-responsive-bs4' )( window, $ );
+*/
 
 export default {
   name: 'app',
@@ -48,6 +58,11 @@ export default {
     }
   },  
   mounted() {
+    
+    this.$nextTick(() => {
+      //$("body").css("color","red");
+    });
+    
     this.fetchCustomers();    
     this.setLayoutHeights ();
     window.addEventListener('resize', this.setLayoutHeights);   
