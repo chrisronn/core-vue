@@ -1,5 +1,5 @@
 <template>
-    <footer class="main-footer">
+    <footer id="siteFooter" class="main-footer">
         <strong><a href="/">Core Vue CRM</a></strong>
     </footer>
 </template>

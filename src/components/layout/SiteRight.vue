@@ -45,7 +45,7 @@
 
 <script>
 export default {
-  name: 'ContentRight',
+  name: 'SiteRight',
 }
 </script>
 

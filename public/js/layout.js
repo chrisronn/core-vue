@@ -65,7 +65,7 @@ var Layout = function ($) {
     }
 
     // Public
-
+    
     Layout.prototype.fixLayoutHeight = function fixLayoutHeight() {
       var heights = {
         window: $(window).height(),
@@ -88,14 +88,14 @@ var Layout = function ($) {
       $('body').removeClass(ClassName.HOLD);
 
       // Activate layout height watcher
-      this.fixLayoutHeight();
+      //this.fixLayoutHeight();
       $(Selector.SIDEBAR).on('collapsed.lte.treeview expanded.lte.treeview collapsed.lte.pushmenu expanded.lte.pushmenu', function () {
         _this.fixLayoutHeight();
       });
-
-      $(window).resize(function () {
-        _this.fixLayoutHeight();
-      });
+      
+      //$(window).resize(function () {
+      //  _this.fixLayoutHeight();
+      //});
 
       $('body, html').css('height', 'auto');
     };

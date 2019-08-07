@@ -1,5 +1,5 @@
 <template>
-    <aside class="main-sidebar">
+    <aside id="contentLeft" class="main-sidebar" :style="$store.getters.layoutSidebarStyle">
         <div class="sidebar">
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" role="menu" data-accordion="false">

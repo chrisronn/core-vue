@@ -30,12 +30,26 @@ export default {
         });
     },
     setLayoutHeights () {
-        console.log("TODO: set heights");
+
+      var windowHeight = window.innerHeight;
+      var siteHeaderHeight = document.getElementById('siteHeader').clientHeight;
+      var siteFooterHeight = document.getElementById('siteFooter').clientHeight;
+      var contentLeftHeight =  document.getElementById('contentLeft') ? document.getElementById('contentLeft').clientHeight : 0;
+
+      var max = windowHeight;
+      if(contentLeftHeight > windowHeight) {
+        max = contentLeftHeight;
+      }
+      var offset = 1;
+      var contentHeight = max - siteHeaderHeight - siteFooterHeight - offset;
+      var sidebarHeight = max - siteHeaderHeight - offset;
+
+      this.$store.commit('setLayoutHeights', contentHeight, sidebarHeight);
     }
   },  
   mounted() {
     this.fetchCustomers();    
-
+    this.setLayoutHeights ();
     window.addEventListener('resize', this.setLayoutHeights);   
   },
   beforeDestroy () {

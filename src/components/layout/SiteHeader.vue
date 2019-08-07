@@ -1,6 +1,6 @@
 <template>
 
-    <header class="main-header fixed-top">
+    <header id="siteHeader" class="main-header fixed-top">
 
       <a :href=this.$homeUrl class="brand-link">
       <span>&nbsp;</span>
@@ -18,7 +18,7 @@
       <span class="nav-header">CRM</span>
       </li>
       <li class="nav-item">
-      <router-link class="nav-link" :to="{name:'start'}">Start</router-link>
+      <router-link class="nav-link" :to="{name:'Start'}">Start</router-link>
       </li>
       <!--li class="nav-item">
       <a href="/" class="nav-link">Ny kund</a>
