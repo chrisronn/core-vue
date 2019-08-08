@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
     state: {
         customers: [],
         allCustomers: [],
+        customer: {},
         emptyCustomer: {
             "id": "",        
             "name": "",
@@ -18,34 +19,58 @@ export const store = new Vuex.Store({
             "mobilephone": "",
             "email": ""
         },
+        layoutSidebarOpen: false,
         layoutSidebarClass: "noSideMenu",
         layoutContentStyle: {},
-        layoutSidebarStyle: {}
+        layoutSidebarStyle: {},
+        layoutContentRightType: "",
+        layoutContentRightOpen: false
     },
     mutations: {
         setCustomers(state, data) {
             state.customers = data;
             state.allCustomers = data;
         },
+        setCustomer(state, data) {
+            state.customer = data;
+        },
         setLayoutHeights(state, contentHeight, sidebarHeight) {
             state.layoutContentStyle = {'min-height': contentHeight +'px'};
             state.layoutSidebarStyle = {'min-height': sidebarHeight +'px'};
         },
         toggleSidebar(state, status) {
+            state.layoutSidebarOpen = status;      
             if(status) {
-                state.layoutSidebarClass = "hold-transition sidebar-mini sidebar-collapse";
+                state.layoutSidebarClass = 'hold-transition sidebar-mini sidebar-collapse';
             } else {
-                state.layoutSidebarClass = "noSideMenu";
-            }
+                state.layoutSidebarClass = 'noSideMenu';
+            }      
+        },
+        toggleSidebarForce(state, status) {
+            if(status) {
+                state.layoutSidebarClass = 'sidebar-mini sidebar-open';
+            } else {
+                state.layoutSidebarClass = 'nhold-transition sidebar-mini sidebar-collapse';
+            }  
+        },    
+        setContentRight(state, content) {
+            state.layoutContentRightType = content;
+        },
+        toggleContentRight(state, status) {
+            state.layoutContentRightOpen = status;
         }
     },    
     getters: {
         customers: state => state.customers,
+        customer: state => state.customer,
         allCustomers: state => state.allCustomers,
         emptyCustomer: state => state.emptyCustomer,
         layoutContentStyle: state => state.layoutContentStyle,
         layoutSidebarStyle: state => state.layoutSidebarStyle,
-        layoutSidebarClass: state => state.layoutSidebarClass
+        layoutSidebarOpen: state => state.layoutSidebarOpen,
+        layoutSidebarClass: state => state.layoutSidebarClass,
+        layoutContentRightOpen: state => state.layoutContentRightOpen,
+        layoutContentRightType: state => state.layoutContentRightType
     }
     
 })

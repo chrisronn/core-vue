@@ -3,6 +3,7 @@
     
     <div class="card card-primary card-outline">
         <div class="card-body">
+            <p>Hello Contacts!!!</p>
             <p><b>Kund:</b> {{customer.name}} </p>
         </div>
     </div>            
@@ -13,7 +14,7 @@
 <script>
 
 export default {
-    name: 'CustomerCard',
+    name: 'CustomerContactList',
     data () {      
       return {}
     },

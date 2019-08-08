@@ -241,6 +241,7 @@ $(document).ready(function(){
 		controlSidebarToggle(false);
 		e.preventDefault();
 	});
+	
 	$('#navprofile').on('click', function(e) {
 
 		if(isSidebarOpen()) {

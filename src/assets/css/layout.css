@@ -495,7 +495,10 @@ body,
 
 .main-sidebar .nav-sidebar > .nav-item > .nav-link.active {
   color: #ffffff;
-  background-color: #007bff;
+  background-color: rgba(255, 255, 255, 0);
+  box-shadow: 0 0 0 transparent !important;
+  border-radius: 0rem !important;
+  /*background-color: rgba(255, 255, 255, 0.4);*/
 }
 
 .main-sidebar .sidebar a {

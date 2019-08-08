@@ -1,5 +1,8 @@
 <template>
-    <div :class="$store.getters.layoutSidebarClass">
+    <div :class="[
+            {'control-sidebar-slide-open':isOpenContentRight},
+            sidebarClass
+        ]">
         <div class="wrapper">
 
             <SiteHeader />
@@ -7,6 +10,7 @@
             <div class="content-wrapper" :style="$store.getters.layoutContentStyle">      
                 <SiteContent />
             </div> 
+            <div id="sidebar-overlay" @click="resetOverlay"></div>
 
             <SiteFooter />
             <SiteRight />    
@@ -29,6 +33,20 @@ export default {
         SiteFooter,
         SiteContent
     }, 
+    methods: {
+        resetOverlay() {
+            this.$store.commit('toggleSidebarForce', false);
+        }
+    },
+    computed: {
+
+        isOpenContentRight() {
+            return this.$store.getters.layoutContentRightOpen;
+        },
+        sidebarClass() {
+            return this.$store.getters.layoutSidebarClass;            
+        }
+    },
     data () {      
       return {}
     }

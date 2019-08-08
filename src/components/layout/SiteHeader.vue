@@ -30,12 +30,12 @@
       <li class="nav-item">
       </li>
       <li class="nav-item">
-      <a class="nav-link" id="navsearch" href="#">
+      <a class="nav-link" id="navsearch" href="#" @click="openSearch">
       <i class="fas fa-search"></i>
       </a>
       </li>
       <li class="nav-item">
-      <a class="nav-link" id="navprofile" href="#">
+      <a class="nav-link" id="navprofile" href="#" @click="openProfile">
       <i class="fas fa-user-circle"></i><span class="nav-link-text ml-2">Per Karlsson</span>
       </a>
       </li>
@@ -49,6 +49,17 @@
 <script>
 export default {
   name: 'SiteHeader',
+  methods: {
+
+    openSearch() {
+      this.$store.commit('toggleContentRight', true);
+      this.$store.commit('setContentRight', "search");
+    },
+    openProfile() {
+      this.$store.commit('toggleContentRight', true);
+      this.$store.commit('setContentRight', "profile");
+    }
+  }
 }
 </script>
 
