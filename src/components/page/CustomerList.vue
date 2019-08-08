@@ -41,6 +41,17 @@
 
 <script>
 
+import 'datatables.net-bs4'
+
+// below you should only import what you need
+// Example: import buttons and plugins
+import 'datatables.net-responsive/js/dataTables.responsive.min.js'
+
+// import the rest for your specific theme
+import 'datatables.net-responsive-bs4'
+
+import 'datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css'
+
 export default {
   name: 'CustomerList',
   created: function () {
