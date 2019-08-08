@@ -5,25 +5,9 @@
 
       <div class="card card-primary card-outline">
         <div class="card-body">
-
-          <table class="table table-bordered mt-3">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Kund</th>
-                <th>Adress</th>
-                <th>Ort</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(customer,i) in $store.getters.customers" v-bind:key="i">
-                <td>{{customer.id}}</td>
-                <td><b><router-link :to="{name: 'CustomerCard', params: {customerId: customer.id}}">{{customer.name}}</router-link></b></td>
-                <td>{{customer.address}}</td>
-                <td>{{customer.city}}</td>
-              </tr>
-            </tbody>
-          </table> 
+          <v-client-table :columns="columns" :data="data" :options="options">
+            <router-link slot="name" slot-scope="props" :to="{name: 'CustomerCard', params: {customerId: props.row.id}}">{{props.row.name}}</router-link>
+          </v-client-table>
         </div>
        </div>
     </div>
@@ -39,11 +23,32 @@ export default {
     this.$store.commit('toggleSidebar', false);   
   },
   components: {},
+  computed: {
+    url() {
+      return this.$dataUrlCustomerRead;
+    },
+    data() {
+      return this.$store.getters.customers;
+    }
+  },
   data () {      
-    return {}
+    return {
+      columns: ['id', 'name', 'address', 'city'],
+      options: {
+        headings: {
+          id: 'ID',
+          name: 'Kund',
+          address: 'Adress',
+          city: 'Ort'
+        },
+        sortable: ['id', 'name', 'address', 'city'],
+        filterable: ['id', 'name', 'address', 'city']
+      }
+    }
   },
  
 }
+
 </script>
 
 <style scoped>

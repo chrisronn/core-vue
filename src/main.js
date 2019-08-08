@@ -22,6 +22,13 @@ Vue.prototype.$dataUrlCustomerRead = process.env.VUE_APP_URL_DATA_CUSTOMER_READ
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter)
 
+import {ServerTable, ClientTable, Event} from 'vue-tables-2';
+Vue.use(ServerTable, 'bootstrap4');
+Vue.use(ClientTable, 'bootstrap4');
+Vue.use(Event);
+
+window.axios = require('axios');
+
 global.jQuery = jQuery
 global.$ = jQuery
 
