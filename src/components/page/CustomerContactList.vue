@@ -1,12 +1,14 @@
 <template>
   <div>
-    
-    <div class="card card-primary card-outline">
+      <h3 class="m-0 mb-3">Kontakter</h3>
+
+      <div class="card card-primary card-outline">
         <div class="card-body">
-            <p>Hello Contacts!!!</p>
-            <p><b>Kund:</b> {{customer.name}} </p>
+          <v-client-table :columns="columns" :data="data" :options="options">
+            <router-link slot="fullname" slot-scope="props" :to="{name: 'CustomerContact', params: {customerId: props.row.custid,contactId: props.row.id}}">{{props.row.fullname}}</router-link>
+          </v-client-table>
         </div>
-    </div>            
+      </div>     
 
   </div>
 </template>
@@ -14,18 +16,68 @@
 <script>
 
 export default {
-    name: 'CustomerContactList',
-    data () {      
-      return {}
+  name: 'CustomerContactList',
+  computed: {
+    customer: function() {
+      return this.$store.getters.customer;
     },
-    computed: {
-
-      customer: function() {
-        return this.$store.getters.customer;
+    data() {
+      return this.$store.getters.contacts;
+    }
+  },
+  data () {      
+    return {
+      columns: ['id', 'fullname', 'mobilephone', 'email'],
+      options: {
+        headings: {
+          id: 'ID',
+          fullname: 'Kontakt',
+          mobilephone: 'Mobilnr.',
+          email: 'E-post'
+        },
+        sortIcon: {
+          base : 'fa',
+          is: 'fa-sort',
+          up: 'fa-sort-alpha-down',
+          down: 'fa-sort-alpha-up'
+        },
+        sortable: ['id', 'fullname', 'mobilephone', 'email'],
+        filterable: false,
+        texts: {
+          count: "Visar {from} till {to} av {count} rader|{count} rader|En rad",
+          first: 'Första',
+          last: 'Sista',
+          filter: "Filtrera:",
+          filterPlaceholder: "Ange sökord",
+          limit: "Rader:",
+          page: "Sida:",
+          noResults: "Inga rader",
+          filterBy: "Filtrera på {column}",
+          loading: 'Laddar...',
+          defaultOption: 'Välj {column}',
+          columns: 'Kolumn'
+        },
       }
     }
+  }
+    
 }
 </script>
 
-<style scoped>
+<style>
+.VueTables__sortable {
+  cursor: pointer !important;
+}
+.VueTables__search-field {
+  display: flex;
+}
+.VueTables__search {
+  float: right !important;
+}
+.VueTables__search-field label {
+  margin-right: 1rem;
+}
+.VuePagination {
+  justify-content: space-between !important;
+}
 </style>

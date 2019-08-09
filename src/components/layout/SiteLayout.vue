@@ -15,6 +15,9 @@
             <SiteFooter />
             <SiteRight />    
         </div>
+        
+        <GenericModal />
+
     </div>
 </template>
 
@@ -24,6 +27,7 @@ import SiteHeader from './SiteHeader.vue'
 import SiteRight from './SiteRight.vue'
 import SiteFooter from './SiteFooter.vue'
 import SiteContent from './Content.vue'
+import GenericModal from './GenericModal.vue'
 
 export default {
     name: 'CustomerCard',
@@ -31,7 +35,8 @@ export default {
         SiteHeader,
         SiteRight,
         SiteFooter,
-        SiteContent
+        SiteContent,
+        GenericModal
     }, 
     methods: {
         resetOverlay() {

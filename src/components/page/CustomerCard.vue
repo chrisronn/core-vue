@@ -1,29 +1,167 @@
 <template>
   <div>
-    
-    <div class="card card-primary card-outline">
-        <div class="card-body">
-            <p><b>Kund:</b> {{customer.name}} </p>
+    <div class="row">
+      <section
+        id="column1"
+        class="col-xl-3 col-lg-4 col-sm-6 box-column connectedSortable ui-sortable"
+      >
+        <div id="info" class="card card-primary card-outline" style>
+          <div class="card-header dragable ui-sortable-handle" style="cursor: move;">
+            <h3 class="card-title">
+              <i class="fas fa-info-circle fa-fw"></i> Information
+            </h3>
+            <div class="card-tools">
+              <router-link class="btn btn-tool" :to="{name: 'CustomerInfo', params: {customerId: customer.id}}">
+                <i class="fas fa-pencil-alt"></i>
+              </router-link>
+              <button
+                class="btn btn-tool box-toggle"
+                data-boxid="info"
+                data-boxtype="standard"
+                data-boxname="info"
+                data-widget="collapse"
+                style
+              >
+                <i class="fas fa-chevron-up"></i>
+              </button>
+              <button
+                class="btn btn-tool box-remove"
+                data-boxid="info"
+                data-boxtype="standard"
+                data-boxname="info"
+                data-msg="Vill du ta bort boxen? Du kan återställa den igen via inställningarna i menyn."
+                data-toggle="tooltip"
+                title="Ta bort"
+                style
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body no-padding">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td class="cell-label">KundID:</td>
+                  <td>{{customer.id}}</td>
+                </tr>
+                <tr>
+                  <td class="cell-label">Kund:</td>
+                  <td>{{customer.name}}</td>
+                </tr>
+                <tr>
+                  <td class="cell-label">Adress:</td>
+                  <td>{{customer.address}}</td>
+                </tr>
+                <tr>
+                  <td class="cell-label">Postadress:</td>
+                  <td>{{customer.zipcode}} {{customer.city}}</td>
+                </tr>
+                <tr>
+                  <td class="cell-label">Telefon:</td>
+                  <td>{{customer.phone}}</td>
+                </tr>
+                <tr>
+                  <td class="cell-label">Mobil:</td>
+                  <td>{{customer.mobilephone}}</td>
+                </tr>
+                <tr>
+                  <td class="cell-label">E-post:</td>
+                  <td>{{customer.email}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-    </div>            
-
+      </section>
+      <section
+        id="column2"
+        class="col-xl-3 col-lg-4 col-sm-6 box-column connectedSortable ui-sortable"
+      ></section>
+      <section
+        id="column3"
+        class="col-xl-3 col-lg-4 col-sm-6 box-column connectedSortable ui-sortable"
+      >
+        <div id="contacts" class="card card-primary card-outline" style>
+          <div class="card-header dragable ui-sortable-handle" style="cursor: move;">
+            <h3 class="card-title">
+              <i class="fas fa-user fa-fw"></i> Kontakter
+            </h3>
+            <div class="card-tools">
+              <a
+                href="/"
+                target
+                class="btn btn-tool"
+                data-toggle="tooltip"
+                title="Ny"
+              >
+                <i class="fas fa-plus"></i>
+              </a>
+              <router-link class="btn btn-tool" :to="{name: 'CustomerContactList', params: {customerId: customer.id}}">
+                 <i class="fas fa-folder-open"></i>
+              </router-link>
+              <button
+                class="btn btn-tool box-toggle"
+                data-boxid="contacts"
+                data-boxtype="standard"
+                data-boxname="contacts"
+                data-widget="collapse"
+                style
+              >
+                <i class="fas fa-chevron-up"></i>
+              </button>
+              <button
+                class="btn btn-tool box-remove"
+                data-boxid="contacts"
+                data-boxtype="standard"
+                data-boxname="contacts"
+                data-msg="Vill du ta bort boxen? Du kan återställa den igen via inställningarna i menyn."
+                data-toggle="tooltip"
+                title="Ta bort"
+                style
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body no-padding" style="display: block;">
+            <table class="table">
+              <tbody>
+                <tr v-for="(contact,i) in contacts" v-bind:key="i">
+                  <td class="cell-icon">
+                    <i class="far fa-user"></i>
+                  </td>
+                  <td>
+                    <router-link :to="{name: 'CustomerContact', params: {customerId: customer.id,contactId: contact.id}}">
+                    {{contact.fullname}}
+                    </router-link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section id="column4" class="col-xl-3 col-lg-4 col-sm-6 box-column connectedSortable ui-sortable"></section>
+    </div>
   </div>
 </template>
 
 <script>
-
 export default {
-    name: 'CustomerCard',
-    data () {      
-      return {}
+  name: "CustomerCard",
+  data() {
+    return {};
+  },
+  computed: {
+    customer: function() {
+      return this.$store.getters.customer;
     },
-    computed: {
-
-      customer: function() {
-        return this.$store.getters.customer;
-      }
+    contacts: function() {
+      return this.$store.getters.contacts;
     }
-}
+  }
+};
 </script>
 
 <style scoped>

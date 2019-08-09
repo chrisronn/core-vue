@@ -10,7 +10,8 @@
             <router-link slot="name" slot-scope="props" :to="{name: 'CustomerCard', params: {customerId: props.row.id}}">{{props.row.name}}</router-link>
           </v-client-table>
         </div>
-       </div>
+      </div>
+      
     </div>
   </section>
 
@@ -20,14 +21,8 @@
 
 export default {
   name: 'CustomerList',
-  created: function () {
-    this.$store.commit('toggleSidebar', false);   
-  },
   components: {},
   computed: {
-    url() {
-      return this.$dataUrlCustomerRead;
-    },
     data() {
       return this.$store.getters.customers;
     }
@@ -51,22 +46,47 @@ export default {
         sortable: ['id', 'name', 'address', 'city'],
         filterable: ['id', 'name', 'address', 'city'],
         texts: {
-                count: "Visar {from} till {to} av {count} rader|{count} rader|En rad",
-                first: 'Första',
-                last: 'Sista',
-                filter: "Filtrera:",
-                filterPlaceholder: "Ange sökord",
-                limit: "Rader:",
-                page: "Sida:",
-                noResults: "Inga rader",
-                filterBy: "Filtrera på {column}",
-                loading: 'Laddar...',
-                defaultOption: 'Välj {column}',
-                columns: 'Kolumn'
-            },
+          count: "Visar {from} till {to} av {count} rader|{count} rader|En rad",
+          first: 'Första',
+          last: 'Sista',
+          filter: "Filtrera:",
+          filterPlaceholder: "Ange sökord",
+          limit: "Rader:",
+          page: "Sida:",
+          noResults: "Inga rader",
+          filterBy: "Filtrera på {column}",
+          loading: 'Laddar...',
+          defaultOption: 'Välj {column}',
+          columns: 'Kolumn'
+        },
       }
     }
   },
+  methods: {
+
+    fetchCustomers () {
+        var url = this.$dataUrlCustomerRead;
+        console.log("URL in CustomerList" + url);
+        this.axios
+        .get(url)
+        .then(response => {
+          this.$store.commit('setCustomers', response.data)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  },
+  created: function () {
+
+    this.$store.commit('toggleSidebar', false);   
+    
+  },
+  mounted() {
+
+     this.fetchCustomers(); 
+
+  }
  
 }
 
@@ -85,7 +105,7 @@ export default {
 .VueTables__search-field label {
   margin-right: 1rem;
 }
-.VueTables__pagination {
+.VuePagination {
   justify-content: space-between !important;
 }
 </style>

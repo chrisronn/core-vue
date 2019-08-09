@@ -5,6 +5,7 @@ import CustomerList from "../components/page/CustomerList";
 import CustomerCard from "../components/page/CustomerCard";
 import CustomerInfo from "../components/page/CustomerInfo";
 import CustomerContactList from "../components/page/CustomerContactList";
+import CustomerContact from "../components/page/CustomerContact";
 
 const routes = [
     {
@@ -43,6 +44,12 @@ const routes = [
               path: 'contacts',
               name: 'CustomerContactList',
               component: CustomerContactList,
+            },
+            {
+              path: 'contact/:contactId',
+              name: 'CustomerContact',
+              component: CustomerContact,
+              props: true
             }
           ]
         }

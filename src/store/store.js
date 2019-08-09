@@ -6,8 +6,13 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 
     state: {
+        layoutSidebarOpen: false,
+        layoutSidebarClass: "noSideMenu",
+        layoutContentStyle: {},
+        layoutSidebarStyle: {},
+        layoutContentRightType: "",
+        layoutContentRightOpen: false,
         customers: [],
-        allCustomers: [],
         customer: {},
         emptyCustomer: {
             "id": "",        
@@ -19,20 +24,30 @@ export const store = new Vuex.Store({
             "mobilephone": "",
             "email": ""
         },
-        layoutSidebarOpen: false,
-        layoutSidebarClass: "noSideMenu",
-        layoutContentStyle: {},
-        layoutSidebarStyle: {},
-        layoutContentRightType: "",
-        layoutContentRightOpen: false
+        contacts: [],
+        contact: {},
+        emptyContact: {
+            "id": "",  
+            "custid": "",       
+            "firstname": "",
+            "lastname": "",        
+            "phone": "",
+            "mobilephone": "",
+            "email": ""
+        }
     },
     mutations: {
         setCustomers(state, data) {
             state.customers = data;
-            state.allCustomers = data;
         },
         setCustomer(state, data) {
             state.customer = data;
+        },
+        setContacts(state, data) {
+            state.contacts = data;
+        },
+        setContact(state, data) {
+            state.contact = data;
         },
         setLayoutHeights(state, contentHeight, sidebarHeight) {
             state.layoutContentStyle = {'min-height': contentHeight +'px'};
@@ -62,9 +77,11 @@ export const store = new Vuex.Store({
     },    
     getters: {
         customers: state => state.customers,
-        customer: state => state.customer,
-        allCustomers: state => state.allCustomers,
+        customer: state => state.customer,        
         emptyCustomer: state => state.emptyCustomer,
+        contacts: state => state.contacts,
+        contact: state => state.contact,        
+        emptyContact: state => state.emptyContact,
         layoutContentStyle: state => state.layoutContentStyle,
         layoutSidebarStyle: state => state.layoutSidebarStyle,
         layoutSidebarOpen: state => state.layoutSidebarOpen,

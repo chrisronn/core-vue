@@ -18,6 +18,9 @@ Vue.config.productionTip = false
 Vue.prototype.$useExternalApi = process.env.VUE_APP_EXTERNAL_API
 Vue.prototype.$homeUrl = process.env.VUE_APP_URL_HOME
 Vue.prototype.$dataUrlCustomerRead = process.env.VUE_APP_URL_DATA_CUSTOMER_READ
+Vue.prototype.$dataUrlCustomerReadOne = process.env.VUE_APP_URL_DATA_CUSTOMER_READ_ONE
+Vue.prototype.$dataUrlContactRead = process.env.VUE_APP_URL_DATA_CONTACT_READ
+Vue.prototype.$dataUrlContactReadOne = process.env.VUE_APP_URL_DATA_CONTACT_READ_ONE
 
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter)

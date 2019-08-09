@@ -12,9 +12,9 @@
         <div class="mt-1 text-center"><strong>Per Karlsson</strong></div>
         <div class="mt-1 text-center">per.karlsson@email.se</div>
 
-        <a href="/" class="btn btn-default btn-block mt-3"><i class="fa fa-cog mr-2"></i>Inställningar</a>
+        <button class="btn btn-default btn-block mt-3" data-toggle="modal" data-target="#genericModal"><i class="fa fa-cog mr-2"></i>Inställningar</button>
 
-        <a href="#" class="btn btn-default btn-block mt-3"><i class="fa fa-sign-out-alt mr-2"></i>Logga ut</a>
+        <button class="btn btn-default btn-block mt-3" data-toggle="modal" data-target="#genericModal"><i class="fa fa-sign-out-alt mr-2"></i>Logga ut</button>
 
       </div>
 
@@ -28,7 +28,7 @@
         <div class="input-group mb-2">
         <input type="text" class="form-control search-nav" id="searchFT" name="searchFT" value="">
         <div class="input-group-prepend">
-        <button name="search" id="global-search-btn" class="btn btn-default"><i class="fa fa-search"></i></button>
+        <button name="search" id="global-search-btn" class="btn btn-default" data-toggle="modal" data-target="#genericModal"><i class="fa fa-search"></i></button>
         </div>
         </div>
 

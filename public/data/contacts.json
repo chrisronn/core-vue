@@ -1,0 +1,62 @@
+[
+    {
+        "id": "50001",        
+        "custid": "1001",
+        "fullname": "Linus Torvalds",
+        "firstname": "Linus",
+        "lastname": "Torvalds",
+		"phone": "123-4567890",
+		"mobilephone": "070-32165897",
+		"email": "linus@torvalds.se"
+    },
+    {
+        "id": "50002",        
+        "custid": "1002",        
+        "fullname": "Karl Karlsson",
+        "firstname": "Karl",
+        "lastname": "Karlsson",
+		"phone": "08-1819201",
+		"mobilephone": "073-6549873",
+		"email": "karl@karlsson.se"
+    },
+    {
+        "id": "50003",        
+        "custid": "1003",        
+        "fullname": "Sven Svensson",
+        "firstname": "Sven",
+        "lastname": "Svensson",
+		"phone": "036-8569885",
+		"mobilephone": "071-1155689",
+		"email": "sven@svensson.se"
+    },
+    {
+        "id": "50004",        
+        "custid": "1001",        
+        "fullname": "Karin Karinsdotter",
+        "firstname": "Karin",
+        "lastname": "Karinsdotter",
+		"phone": "031-5698774",
+		"mobilephone": "074-3366584",
+		"email": "karin@karingsdotter.se"
+    },
+    {
+        "id": "50005",        
+        "custid": "1001",        
+        "fullname": "Britta Brittasdotter",
+        "firstname": "Britta",
+        "lastname": "Brittasdotter",
+		"phone": "064-98655478",
+		"mobilephone": "073-1315184",
+		"email": "britt@brittasdotter.se"
+    },
+    {
+        "id": "50006",        
+        "custid": "1003",
+        "fullname": "Ulf Ulfsson",
+        "firstname": "Ulf",
+        "lastname": "Ulfsson",
+		"phone": "048-6644811",
+		"mobilephone": "070-4598765",
+		"email": "ulf@ulfsson.se"
+    }
+]

@@ -37,6 +37,7 @@
 <script>
 
 import ContentLeft from '../layout/ContentLeft.vue'
+import _ from 'lodash';
 
 export default {
     name: 'Customer',
@@ -52,25 +53,72 @@ export default {
     methods: {
       toggleSidebarForce() {
         this.$store.commit('toggleSidebarForce', true);
+      },
+      getCustomer() {
+        if(this.customerId) {          
+          var id = this.customerId;
+
+          var url = this.$dataUrlCustomerReadOne;
+          if(this.$useExternalApi=="true") {
+            url += id;
+            // TODO: implement later
+          } else {
+            this.axios
+            .get(url)
+            .then(response => {
+              if(response.data.length > 0) {
+                var customerInList = response.data.find(function (el) {
+                    return el.id==id;
+                });
+                if(customerInList) {          
+                  this.$store.commit('setCustomer', customerInList);
+                  return customerInList;
+                }
+              }
+              this.$store.commit('setCustomer', this.$store.getters.emptyCustomer);
+              return this.$store.getters.emptyCustomer;
+            })
+            .catch(error => {
+              console.log(error);
+              this.$store.commit('setCustomer', this.$store.getters.emptyCustomer);
+              return this.$store.getters.emptyCustomer;
+            });
+          } 
+        }  
+        return this.$store.getters.emptyCustomer;
+      },
+      fetchContacts() {
+        if(this.customerId) {  
+          var id = this.customerId;        
+          var url = this.$dataUrlContactRead;
+          this.axios
+          .get(url)
+          .then(response => {
+            let conts = _.filter(response.data, { 'custid': id });
+            this.$store.commit('setContacts', conts)
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        }
       }
     },
     computed: {
 
       customer: function() {
-        if(this.customerId) {          
-          var id = this.customerId;
-          var customerInList = this.$store.getters.customers.find(function (el) {
-              return el.id==id;
-          });
-          if(customerInList) {          
-            this.$store.commit('setCustomer', customerInList);
-            return customerInList;
-          }
-        }
-        return this.$store.getters.emptyCustomer;
+        return this.$store.getters.customer
+      },
+      contacts: function() {
+        return this.$store.getters.contacts
       }
     },
     props: ["customerId"],
+    mounted() {
+
+      this.getCustomer(); 
+      this.fetchContacts(); 
+      
+    }
 }
 </script>
 
