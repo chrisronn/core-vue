@@ -22,9 +22,12 @@ Vue.prototype.$dataUrlCustomerRead = process.env.VUE_APP_URL_DATA_CUSTOMER_READ
 Vue.use(VueAxios, axios)
 Vue.use(VueRouter)
 
-import {ServerTable, ClientTable, Event} from 'vue-tables-2';
-Vue.use(ServerTable, 'bootstrap4');
-Vue.use(ClientTable, 'bootstrap4');
+import { ClientTable, Event } from 'vue-tables-2';
+let options = {};
+let useVuex = false;
+let theme = "bootstrap4";
+let template = "default";
+Vue.use(ClientTable, options, useVuex, theme, template);
 Vue.use(Event);
 
 window.axios = require('axios');
