@@ -1,6 +1,9 @@
 <template>
   <div>
+
     <ContentLeft />
+
+    <div class='ajax-loader icon-loader text-center' v-if="this.$store.getters.loader"><i class='fas fa-spinner fa-pulse'></i></div>
 
     <div class="cardpage-top border-bottom">
 
@@ -75,17 +78,14 @@ export default {
                   return customerInList;
                 }
               }
-              this.$store.commit('setCustomer', this.$store.getters.customerModel);
-              return this.$store.getters.customerModel;
             })
             .catch(error => {
-              console.log(error);
-              this.$store.commit('setCustomer', this.$store.getters.customerModel);
-              return this.$store.getters.customerModel;
+              console.log(error);              
             });
           } 
         }  
-        return this.$store.getters.customerModel;
+        this.$store.dispatch('resetCustomer');
+        return this.$store.getters.customer;
       },
       fetchContacts() {
         if(this.customerId) {  

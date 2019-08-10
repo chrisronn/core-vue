@@ -49,7 +49,7 @@ global.$ = jQuery
 import { store } from './store/store'
 import routes from './routes/routes'
 
-export const router = new VueRouter({
+const router = new VueRouter({
   base: process.env.VUE_APP_URL_ROOT,
   mode: process.env.VUE_APP_URL_ROUTE_MODE,
   hash: /^true$/i.test(process.env.VUE_APP_URL_ROUTE_HASH),

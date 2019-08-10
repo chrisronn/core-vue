@@ -106,34 +106,38 @@
 <script>
 
 export default {
-  name: 'CustomerCreate',
-  data () {      
-    return {}
-  },
-  computed: {
-      customer() {
-        return this.$store.getters.customerModel;
-      },
-      contact() {
-        return this.$store.getters.contactModel;
-      }
-  },
-  methods: {
+    name: 'CustomerCreate',
+    data () {      
+        return {}
+    },
+    computed: {
+        customer() {
+            return this.$store.getters.customer;
+        },
+        contact() {
+            return this.$store.getters.contact;
+        }
+    },
+    methods: {
 
-    postForm() {
-        let cust = this.customer;
-        let cont = this.contact;
-        this.$store.commit('addCustomer', {cust, cont});
-        
-        //this.customer = this.$store.getters.customerModel;
-        //this.contact = this.$store.getters.contactModel;        
-    }
-},
-  created: function () {
+        postForm() {
+            let cust = this.customer;
+            let cont = this.contact;
+            this.$store.dispatch('postCustomerForm', {cust, cont}).then(() => {
+                console.log("done");
+                this.$router.push("/customer/" + this.$store.getters.customer.id);
+            });    
+        }
+    },
+    created() {
 
-    this.$store.commit('toggleSidebar', false);   
-    
-  }, 
+        this.$store.commit('toggleSidebar', false);   
+
+    },
+    mounted() {
+        this.$store.dispatch('resetCustomer');
+        this.$store.dispatch('resetContact');
+    } 
 }
 
 </script>
