@@ -7,6 +7,8 @@
 
             <SiteHeader />
 
+            <div class='ajax-loader icon-loader text-center' v-if="this.$store.getters.loader"><i class='fas fa-spinner fa-pulse'></i></div>
+
             <div class="content-wrapper" :style="$store.getters.layoutContentStyle">      
                 <SiteContent />
             </div> 

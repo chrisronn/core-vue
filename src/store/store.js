@@ -35,7 +35,7 @@ export const store = new Vuex.Store({
             state.customers.push(data);
         },
         addContact(state, data) {
-            state.contact.push(data);
+            state.contacts.push(data);
         },
         startLoader(state) {
             state.loader = true;
@@ -86,6 +86,7 @@ export const store = new Vuex.Store({
             }
             commit('setCustomer', cust);
         },
+
         resetContact({ commit }) {
 
             let cont= {
@@ -99,13 +100,14 @@ export const store = new Vuex.Store({
             }
             commit('setContact', cont);
         },
-        postCustomerForm({ commit }, { cust, cont }) {
-            
-            localStorage.setItem('cust', cust)
-            localStorage.setItem('cont', cont)
 
+        addCustomer({ dispatch, commit }, { cust, cont }) {
             
-            
+            commit('startLoader');
+
+            localStorage.setItem('cust', cust);
+            localStorage.setItem('cont', cont);            
+                        
             return new Promise((resolve, reject) => {
                
                 if(this.$useExternalApi=="true") {
@@ -118,22 +120,21 @@ export const store = new Vuex.Store({
                     params.append('zipcode', cust.zipcode);
                     params.append('city', cust.city);
 
-                    params.append('firstname', cont.firstname);
-                    params.append('lastname', cont.lastname);
-                    params.append('phone', cont.phone);
-                    params.append('mobilephone', cont.mobilephone);
-                    params.append('email', cont.email);
-
-                    commit('startLoader');
-
                     this.axios
                     .post(url, params)
                     .then(response => {
-                        this.isLoading = false;
-                        console.log(response.data);
                         
-                        resolve();
+                        // add customer
+                        cust.id = response.response.data.id;
+                        commit('setCustomer', cust);
+                        commit('addCustomer', cust);
 
+                        // add contact
+                        cont.custid = cust.id;
+                        dispatch('addContact', cont).then(() => {
+                            commit('stopLoader');
+                            resolve();
+                        })                        
                     })
                     .catch(error => {
                         commit('stopLoader');
@@ -143,26 +144,72 @@ export const store = new Vuex.Store({
                     
                 } else {
 
-                    let custId = (Math.floor(Math.random() * 10000) + 2000).toString();
-                    let contId = (Math.floor(Math.random() * 10000) + 2000).toString();
-                    cust.id = custId.toString();   
-                    cont.custid = custId.toString();
-                    cont.id = contId.toString();
-                    cont.fullname = cont.firstname + " " + cont.lastname;
-
+                    // add customer
+                    let custId = (Math.floor(Math.random() * 10000) + 2000).toString();                    
+                    cust.id = custId.toString();     
                     commit('setCustomer', cust);
                     commit('addCustomer', cust);
 
-                    resolve();
-                    
+                    // add contact
+                    cont.custid = cust.id  
+                    setTimeout(() => {
+                        dispatch('addContact', cont).then(() => {
+                            commit('stopLoader');
+                            resolve();
+                        })  
+                    }, 1000)    
                 }
             })
-
         },
 
         addContact({ commit }, cont) {
             
-            commit('setContact', cont);
+            commit('startLoader');
+
+            return new Promise((resolve, reject) => {
+
+                if (this.$useExternalApi == "true") {
+                    
+                    var url = this.$dataUrlContactCreate + cont.custid + this.$dataUrlContactKey;
+                    var params = new URLSearchParams();
+
+                    params.append('firstname', cont.firstname);
+                    params.append('lastname', cont.lastname);
+                    params.append('phone', cont.phone);
+                    params.append('mobilephone', cont.mobilephone);
+                    params.append('email', cont.email);
+
+                    this.axios
+                        .post(url, params)
+                        .then(response => {
+                        
+                            cont.id = response.data.id;
+                            cont.fullname = cont.firstname + " " + cont.lastname;
+                            commit('setContact', cont);
+                            commit('addContact', cont);
+
+                            commit('stopLoader');
+                            resolve();
+                        })
+                        .catch(error => {
+                            commit('stopLoader');
+                            console.log(error);
+                            reject();
+                        });
+                    
+                } else {
+
+                    let contId = (Math.floor(Math.random() * 10000) + 2000).toString();
+                    cont.id = contId.toString();
+                    cont.fullname = cont.firstname + " " + cont.lastname;
+
+                    commit('setContact', cont);
+                    commit('addContact', cont);
+
+                    commit('stopLoader');
+                    resolve();
+                }
+            });
         }
         
     },

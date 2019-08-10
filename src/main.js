@@ -24,6 +24,7 @@ Vue.prototype.$dataUrlCustomerReadOne = process.env.VUE_APP_URL_DATA_CUSTOMER_RE
 Vue.prototype.$dataUrlCustomerUpdate = process.env.VUE_APP_URL_DATA_CUSTOMER_UPDATE
 Vue.prototype.$dataUrlCustomerDelete = process.env.VUE_APP_URL_DATA_CUSTOMER_DELETE
 
+Vue.prototype.$dataUrlContactKey = process.env.VUE_APP_URL_DATA_CONTACT_URL_CONTACT_KEY
 Vue.prototype.$dataUrlContactCreate = process.env.VUE_APP_URL_DATA_CONTACT_CREATE
 Vue.prototype.$dataUrlContactRead = process.env.VUE_APP_URL_DATA_CONTACT_READ
 Vue.prototype.$dataUrlContactReadOne = process.env.VUE_APP_URL_DATA_CONTACT_READ_ONE

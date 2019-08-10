@@ -1,9 +1,7 @@
 <template>
   <div>
 
-    <ContentLeft />
-
-    <div class='ajax-loader icon-loader text-center' v-if="this.$store.getters.loader"><i class='fas fa-spinner fa-pulse'></i></div>
+    <ContentLeft />    
 
     <div class="cardpage-top border-bottom">
 
