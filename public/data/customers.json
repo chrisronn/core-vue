@@ -4,29 +4,20 @@
 		"name": "AB Roberts i Örebro",
         "address": "Örnsrogatan 6",        
 		"zipcode": "702 32",
-		"city": "Örebro",
-		"phone": "019-208020",
-		"mobilephone": "",
-		"email": "info@roberts.se"
+		"city": "Örebro"
 	},
 	{
         "id": "1002",        
 		"name": "IBM Svenska AB",
         "address": "Oddegatan 5",        
 		"zipcode": "164 30",
-		"city": "Kista",
-		"phone": "08-7931000",
-		"mobilephone": "",
-		"email": "Leif.lindqvist@se.ibm.com"
+		"city": "Kista"
     },
     {
         "id": "1003",        
 		"name": "Söderberg & Haak Maskin Aktiebolag",
 		"address": "Box 504",
 		"city": "Staffanstorp",
-		"zipcode": "245 25",
-		"phone": "046-259200",
-		"mobilephone": "",		
-		"email": "larserik.nilsson@sodhaak.se"
+		"zipcode": "245 25"
 	}
 ]

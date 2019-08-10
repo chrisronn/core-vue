@@ -18,11 +18,11 @@
       <span class="nav-header">CRM</span>
       </li>
       <li class="nav-item">
-      <router-link class="nav-link" :to="{name:'Start'}">Start</router-link>
+        <router-link class="nav-link" :to="{name:'Start'}">Kunder</router-link>
       </li>
-      <!--li class="nav-item">
-      <a href="/" class="nav-link">Ny kund</a>
-      </li-->
+      <li class="nav-item">
+        <router-link class="nav-link" :to="{name:'CustomerCreate'}">Ny kund</router-link>
+      </li>
       </ul>
       </div>   
 

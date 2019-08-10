@@ -12,7 +12,7 @@
                 </li>
                     
                 <li class="nav-item">
-                <router-link class="nav-link" :to="{name: 'CustomerInfo', params: {customerId: customer.id}}">
+                <router-link class="nav-link" :to="{name: 'CustomerEdit', params: {customerId: customer.id}}">
                 <i class="nav-icon fas fa-info-circle"></i>
                 <p>Information</p>
                 </router-link>

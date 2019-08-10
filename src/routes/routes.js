@@ -2,8 +2,9 @@
 import SiteLayout from "../components/layout/SiteLayout";
 import Customer from "../components/page/Customer";
 import CustomerList from "../components/page/CustomerList";
+import CustomerCreate from "../components/page/CustomerCreate";
 import CustomerCard from "../components/page/CustomerCard";
-import CustomerInfo from "../components/page/CustomerInfo";
+import CustomerEdit from "../components/page/CustomerEdit";
 import CustomerContactList from "../components/page/CustomerContactList";
 import CustomerContact from "../components/page/CustomerContact";
 
@@ -25,6 +26,11 @@ const routes = [
           component: CustomerList
         },
         {
+          path: 'create',
+          name: 'CustomerCreate',
+          component: CustomerCreate
+        },
+        {
           path: ':customerId',
           component: Customer,
           redirect: '/customer/:customerId/card',
@@ -36,9 +42,9 @@ const routes = [
               component: CustomerCard,
             },
             {
-              path: 'info',
-              name: 'CustomerInfo',
-              component: CustomerInfo,
+              path: 'edit',
+              name: 'CustomerEdit',
+              component: CustomerEdit,
             },
             {
               path: 'contacts',

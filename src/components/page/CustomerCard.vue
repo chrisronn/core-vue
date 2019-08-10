@@ -11,7 +11,7 @@
               <i class="fas fa-info-circle fa-fw"></i> Information
             </h3>
             <div class="card-tools">
-              <router-link class="btn btn-tool" :to="{name: 'CustomerInfo', params: {customerId: customer.id}}">
+              <router-link class="btn btn-tool" :to="{name: 'CustomerEdit', params: {customerId: customer.id}}">
                 <i class="fas fa-pencil-alt"></i>
               </router-link>
               <button
@@ -56,18 +56,6 @@
                 <tr>
                   <td class="cell-label">Postadress:</td>
                   <td>{{customer.zipcode}} {{customer.city}}</td>
-                </tr>
-                <tr>
-                  <td class="cell-label">Telefon:</td>
-                  <td>{{customer.phone}}</td>
-                </tr>
-                <tr>
-                  <td class="cell-label">Mobil:</td>
-                  <td>{{customer.mobilephone}}</td>
-                </tr>
-                <tr>
-                  <td class="cell-label">E-post:</td>
-                  <td>{{customer.email}}</td>
                 </tr>
               </tbody>
             </table>

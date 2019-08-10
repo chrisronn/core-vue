@@ -98,11 +98,11 @@ export default {
                         return contactInList;
                     }
                 }
-                this.$store.commit('setContact', this.$store.getters.emptyContact);
-                return this.$store.getters.emptyContact;
+                this.$store.commit('setContact', this.$store.getters.contactModel);
+                return this.$store.getters.contactModel;
                 
             }  
-            return this.$store.getters.emptyContact;
+            return this.$store.getters.contactModel;
         }
     },
     mounted() {

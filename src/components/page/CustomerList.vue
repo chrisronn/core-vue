@@ -3,9 +3,10 @@
   <section class="content">
     <div class="container-fluid">
 
+      <h3 class="m-0 mb-3">Kunder</h3>
+      
       <div class="card card-primary card-outline">
         <div class="card-body">
-          <h3>Kunder</h3>
           <v-client-table :columns="columns" :data="data" :options="options">
             <router-link slot="name" slot-scope="props" :to="{name: 'CustomerCard', params: {customerId: props.row.id}}">{{props.row.name}}</router-link>
           </v-client-table>

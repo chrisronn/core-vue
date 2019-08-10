@@ -3,7 +3,7 @@
     
     <h3 class="m-0 mb-3">Information</h3>
 
-<div class="card card-primary card-outline">
+  <div class="card card-primary card-outline">
       <div class="card-header clearfix">
         <div class="float-left mb-1 mb-sm-0">
           <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#genericModal">
@@ -27,7 +27,7 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-sm-5 col-md-4 col-lg-3 col-form-label">Kund:<span class="required-icon">*</span></label>
+                <label class="col-sm-5 col-md-4 col-lg-3 col-form-label">Kundnamn:<span class="required-icon">*</span></label>
                 <div class="col-sm-7 col-md-8 col-lg-9">
                   <input type="text" name="name" v-model="customer.name" class="form-control" required/>
                 </div>
@@ -53,27 +53,6 @@
                   <input type="text" name="city" v-model="customer.city" class="form-control" required/>
                 </div>
               </div>
-
-              <div class="form-group row">
-                <label class="col-sm-5 col-md-4 col-lg-3 col-form-label">Telefon:</label>
-                <div class="col-sm-7 col-md-8 col-lg-9">
-                  <input type="text" name="phone" v-model="customer.phone" class="form-control"/>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-sm-5 col-md-4 col-lg-3 col-form-label">Mobilnr:</label>
-                <div class="col-sm-7 col-md-8 col-lg-9">
-                  <input type="text" name="mobilephone" v-model="customer.mobilephone" class="form-control"/>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-sm-5 col-md-4 col-lg-3 col-form-label">E-post:</label>
-                <div class="col-sm-7 col-md-8 col-lg-9">
-                  <input type="text" name="email" v-model="customer.email" class="form-control"/>
-                </div>
-              </div>
               
             </form>
           </div>
@@ -87,7 +66,7 @@
 <script>
 
 export default {
-    name: 'CustomerInfo',
+    name: 'CustomerEdit',
     data () {      
       return {}
     },

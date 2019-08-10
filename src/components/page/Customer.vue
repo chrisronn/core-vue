@@ -75,17 +75,17 @@ export default {
                   return customerInList;
                 }
               }
-              this.$store.commit('setCustomer', this.$store.getters.emptyCustomer);
-              return this.$store.getters.emptyCustomer;
+              this.$store.commit('setCustomer', this.$store.getters.customerModel);
+              return this.$store.getters.customerModel;
             })
             .catch(error => {
               console.log(error);
-              this.$store.commit('setCustomer', this.$store.getters.emptyCustomer);
-              return this.$store.getters.emptyCustomer;
+              this.$store.commit('setCustomer', this.$store.getters.customerModel);
+              return this.$store.getters.customerModel;
             });
           } 
         }  
-        return this.$store.getters.emptyCustomer;
+        return this.$store.getters.customerModel;
       },
       fetchContacts() {
         if(this.customerId) {  
