@@ -101,18 +101,37 @@ export const store = new Vuex.Store({
             commit('setContact', cont);
         },
 
-        addCustomer({ dispatch, commit }, { cust, cont }) {
+        loadCustomers({ commit }, { vm }) {
+
+            commit('startLoader');  
+
+            var url = vm.$dataUrlCustomerRead;
+
+            vm.axios
+            .get(url)
+            .then(response => {                    
+                commit('setCustomers', response.data);
+                commit('stopLoader');
+            })
+            .catch(error => {
+                commit('stopLoader');
+                console.log(error);
+            });
+        },
+
+        addCustomer({ dispatch, commit }, { cust, cont, vm }) {
             
             commit('startLoader');
 
             localStorage.setItem('cust', cust);
-            localStorage.setItem('cont', cont);            
+            localStorage.setItem('cont', cont);  
+            localStorage.setItem('vm', vm); 
                         
             return new Promise((resolve, reject) => {
                
-                if(this.$useExternalApi=="true") {
+                if(vm.$useExternalApi=="true") {
                 
-                    var url = this.$dataUrlCustomerCreate;
+                    var url = vm.$dataUrlCustomerCreate;
                     var params = new URLSearchParams();
 
                     params.append('name', cust.name);
@@ -120,7 +139,7 @@ export const store = new Vuex.Store({
                     params.append('zipcode', cust.zipcode);
                     params.append('city', cust.city);
 
-                    this.axios
+                    vm.axios
                     .post(url, params)
                     .then(response => {
                         
@@ -153,7 +172,7 @@ export const store = new Vuex.Store({
                     // add contact
                     cont.custid = cust.id  
                     setTimeout(() => {
-                        dispatch('addContact', cont).then(() => {
+                        dispatch('addContact', {cont,vm}).then(() => {
                             commit('stopLoader');
                             resolve();
                         })  
@@ -162,13 +181,16 @@ export const store = new Vuex.Store({
             })
         },
 
-        addContact({ commit }, cont) {
+        addContact({ commit }, {cont,vm}) {
             
             commit('startLoader');
 
+            localStorage.setItem('cont', cont);  
+            localStorage.setItem('vm', vm); 
+
             return new Promise((resolve, reject) => {
 
-                if (this.$useExternalApi == "true") {
+                if (vm.$useExternalApi == "true") {
                     
                     var url = this.$dataUrlContactCreate + cont.custid + this.$dataUrlContactKey;
                     var params = new URLSearchParams();
@@ -179,7 +201,7 @@ export const store = new Vuex.Store({
                     params.append('mobilephone', cont.mobilephone);
                     params.append('email', cont.email);
 
-                    this.axios
+                    vm.axios
                         .post(url, params)
                         .then(response => {
                         

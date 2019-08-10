@@ -65,20 +65,10 @@ export default {
   },
   methods: {
 
-    fetchCustomers () {
+    getCustomers () {
 
-        if(this.$store.getters.customers.length < 1) {
-
-          var url = this.$dataUrlCustomerRead;
-          console.log("URL in CustomerList" + url);
-          this.axios
-          .get(url)
-          .then(response => {
-            this.$store.commit('setCustomers', response.data)
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        if(this.$store.getters.customers.length  < 1) {
+          this.$store.dispatch('loadCustomers', { vm: this });          
         }
     }
   },
@@ -89,7 +79,7 @@ export default {
   },
   mounted() {
 
-     this.fetchCustomers(); 
+     this.getCustomers(); 
 
   }
  

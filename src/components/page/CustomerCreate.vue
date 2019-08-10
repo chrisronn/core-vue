@@ -123,10 +123,8 @@ export default {
         postForm() {
             let cust = this.customer;
             let cont = this.contact;
-            this.$store.dispatch('addCustomer', {cust, cont}).then(() => {
-                console.log("Customer id: " + this.$store.getters.customer.id);
-                console.log("Contact id: " + this.$store.getters.contact.id);
-                //this.$router.push("/customer/" + this.$store.getters.customer.id);
+            this.$store.dispatch('addCustomer', {cust, cont, vm: this}).then(() => {
+                this.$router.push("/customer/" + this.$store.getters.customer.id);
             });    
         }
     },
