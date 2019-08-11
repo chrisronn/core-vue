@@ -75,7 +75,8 @@ export default {
       customer: function() {
         return this.$store.getters.customer;
       }
-    }
+    },
+    props: ["customerId"]
 }
 </script>
 

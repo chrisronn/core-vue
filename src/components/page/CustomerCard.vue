@@ -11,7 +11,7 @@
               <i class="fas fa-info-circle fa-fw"></i> Information
             </h3>
             <div class="card-tools">
-              <router-link class="btn btn-tool" :to="{name: 'CustomerEdit', params: {customerId: customer.id}}">
+              <router-link class="btn btn-tool" :to="{name: 'CustomerEdit', params: {customerId: customerId}}">
                 <i class="fas fa-pencil-alt"></i>
               </router-link>
               <button
@@ -85,7 +85,7 @@
               >
                 <i class="fas fa-plus"></i>
               </a>
-              <router-link class="btn btn-tool" :to="{name: 'CustomerContactList', params: {customerId: customer.id}}">
+              <router-link class="btn btn-tool" :to="{name: 'CustomerContactList', params: {customerId: customerId}}">
                  <i class="fas fa-folder-open"></i>
               </router-link>
               <button
@@ -120,7 +120,7 @@
                     <i class="far fa-user"></i>
                   </td>
                   <td>
-                    <router-link :to="{name: 'CustomerContact', params: {customerId: customer.id,contactId: contact.id}}">
+                    <router-link :to="{name: 'CustomerContact', params: {customerId: customerId,contactId: contact.id}}">
                     {{contact.fullname}}
                     </router-link>
                   </td>
@@ -140,7 +140,7 @@
     name: "CustomerCard",
     data() {
       return {};
-    },
+    },    
     computed: {
       customer: function() {
         return this.$store.getters.customer;
@@ -148,6 +148,10 @@
       contacts: function() {
         return this.$store.getters.contacts;
       }
+    },
+    props: ["customerId"],
+    mounted() {
+        console.log("mounted Card: " + this.customerId)
     }
   };
 </script>

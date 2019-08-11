@@ -201,12 +201,85 @@ export const store = new Vuex.Store({
 
         },
 
+        loadContact({ commit, dispatch }, { customerId, contactId, vm }) {
+
+            localStorage.setItem('customerId', customerId);
+            localStorage.setItem('contactId', contactId);
+            localStorage.setItem('vm', vm);
+
+            var url = "";
+
+            return new Promise((resolve, reject) => {
+
+                dispatch('resetContact');
+                
+                if (vm.$useExternalApi == "true") {
+
+                    url = vm.$dataUrlContactReadOne + customerId + vm.$dataUrlContactKey + contactId;
+
+                    vm.axios
+                        .get(url)
+                        .then(response => {
+                            commit('setContact', response.data);
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+
+                } else {
+      
+                    url = vm.$dataUrlContactReadOne;
+
+                    vm.axios
+                        .get(url)
+                        .then(response => {
+
+                            if (response.data.length > 0) {
+                                
+                                var cont = response.data.find(function (el) {
+                                    return el.id == contactId;
+                                });
+                                if (cont) {
+                                    commit('setContact', cont);
+                                }                                
+                            }
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+
+                    /*
+                    if (getters.contacts.length > 0) {                                
+                        
+                        console.log("Contacts: " + getters.contacts.length)
+                        
+                        var cont = getters.contacts.find(function (el) {
+                            return el.id == contactId;
+                        });
+                        if (cont) {
+                            commit('setContact', cont);
+                        }
+                    }
+                    resolve();
+                    */
+                }
+            
+            });
+        },
+
         addCustomer({ dispatch, commit }, { cust, cont, vm }) {
 
             localStorage.setItem('cust', cust);
             localStorage.setItem('cont', cont);
             localStorage.setItem('vm', vm);
                         
+            commit('resetCustomer');
+            commit('setContacts', []);
+
             return new Promise((resolve, reject) => {
                
                 if (vm.$useExternalApi == "true") {

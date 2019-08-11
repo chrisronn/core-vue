@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <ContentLeft />    
+    <ContentLeft :customerId="customerId" />    
 
     <div class="cardpage-top border-bottom">
 
@@ -9,7 +9,7 @@
         <i class="fas fa-ellipsis-h"></i>
       </button>
 
-      <div class="top-name"><router-link :to="{name: 'CustomerCard', params: {customerId: customer.id}}">{{customer.name}}</router-link></div>			
+      <div class="top-name"><router-link :to="{name: 'CustomerCard', params: {customerId: customerId}}">{{customer.name}}</router-link></div>			
             
       <!--ul class="nav top-tools ml-auto justify-content-end">
         <li class="nav-item">
@@ -27,7 +27,7 @@
 
       <div class="container-fluid">
 
-        <router-view></router-view>              
+        <router-view :customerId="customerId"></router-view>              
 
       </div>
     </section>
@@ -64,7 +64,7 @@ export default {
 
       loadCustomer() {
 
-        if(this.customerId.length > 0 && (this.customerId != this.$store.getters.customer)) { 
+        if(this.customerId.length > 0 && (this.customerId != this.$store.getters.customer.id)) { 
           let id = this.customerId;
           this.$store.dispatch('loadCustomer', {customerId: id, vm: this}).then(() => {
                 // customer loaded
@@ -74,7 +74,7 @@ export default {
 
       loadContacts() {
 
-        if(this.customerId.length > 0 && (this.customerId != this.$store.getters.customer)) {  
+        if(this.customerId.length > 0 && (this.customerId != this.$store.getters.customer.id)) {  
           let id = this.customerId;
           this.$store.dispatch('loadContacts', {customerId: id, vm: this}).then(() => {
                 // contacts loaded
@@ -82,14 +82,10 @@ export default {
         }
       }
     },
-    created: function () {
-        this.$store.dispatch('showSidebar',true);
-    },
     mounted() {
-
+      this.$store.dispatch('showSidebar',true);
       this.loadCustomer(); 
       this.loadContacts(); 
-      
     }
 }
 </script>

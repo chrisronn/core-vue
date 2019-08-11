@@ -20,6 +20,8 @@
 
 <script>
 
+import '@/assets/css/vueTables_custom.css'
+
 export default {
   name: 'CustomerList',
   components: {},
@@ -91,19 +93,5 @@ export default {
 </script>
 
 <style>
-.VueTables__sortable {
-    cursor: pointer !important;
-}
-.VueTables__search-field {
-  display: flex;
-}
-.VueTables__search {
-  float: right !important;
-}
-.VueTables__search-field label {
-  margin-right: 1rem;
-}
-.VuePagination {
-  justify-content: space-between !important;
-}
+
 </style>

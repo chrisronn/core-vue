@@ -86,26 +86,20 @@ export default {
         }
     },
     methods: {
-        getContact() {
-            if(this.contactId) {          
-                var id = this.contactId;
-                if(this.contacts.length > 0) {
-                    var contactInList = this.contacts.find(function (el) {
-                        return el.id==id;
-                    });
-                    if(contactInList) {          
-                        this.$store.commit('setContact', contactInList);
-                        return contactInList;
-                    }
-                }
-                
-            }  
-            this.$store.dispatch('resetContact');
-            return this.$store.getters.contact;
+
+        loadContact() {
+
+          if(this.contactId.length > 0 && (this.contactId != this.$store.getters.contact.id)) { 
+            let custId = this.customerId;
+            let contId = this.contactId;
+            this.$store.dispatch('loadContact', {customerId: custId, contactId: contId, vm: this}).then(() => {
+                  // contact loaded
+            });
+          }
         }
     },
     mounted() {
-      this.getContact(); 
+      this.loadContact(); 
     }
 };
 </script>
