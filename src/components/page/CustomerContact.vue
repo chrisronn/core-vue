@@ -1,24 +1,25 @@
 <template>
   <div>
-    <h3 class="m-0 mb-3">Kontakt</h3>
-
+    <h3 class="m-0 mb-3" v-if="this.contactId">Kontakt</h3>
+    <h3 class="m-0 mb-3" v-else>Ny kontakt</h3>
     <div class="card card-primary card-outline">
-      <div class="card-header clearfix">
-        <div class="float-left mb-1 mb-sm-0">
-          <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#genericModal">
-            <i class="fas fa-save mr-1"></i> Spara
-          </button>
+
+      <form name="form" @submit.prevent="postForm">
+        <div class="card-header clearfix">
+          <div class="float-left mb-1 mb-sm-0">
+            <button type="submit" class="btn btn-success mr-2">
+              <i class="fas fa-save mr-1"></i> Spara
+            </button>
+          </div>
+          <div class="float-right mb-1 mb-sm-0">
+            <button type="button"  v-if="this.contactId" class="btn btn-default ml-2" @click="deleteContact" title="Ta bort">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
-        <div class="float-right mb-1 mb-sm-0">
-          <button type="button" class="btn btn-default ml-2" id="trash" title="Ta bort" data-toggle="modal" data-target="#genericModal">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-sm-6">
-            <form name="form" method="POST" action="/">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
 
               <div class="form-group row">
                 <label class="col-sm-5 col-md-4 col-lg-3 col-form-label">ID:</label>
@@ -46,7 +47,7 @@
                 </div>
               </div>
 
-               <div class="form-group row">
+              <div class="form-group row">
                 <label class="col-sm-5 col-md-4 col-lg-3 col-form-label">Mobilnr:<span class="required-icon">*</span></label>
                 <div class="col-sm-7 col-md-8 col-lg-9">
                   <input type="text" name="mobilephone" v-model="contact.mobilephone" class="form-control" required/>
@@ -60,10 +61,10 @@
                 </div>
               </div>
               
-            </form>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>    
 
   </div>
@@ -89,17 +90,47 @@ export default {
 
         loadContact() {
 
-          if(this.contactId.length > 0 && (this.contactId != this.$store.getters.contact.id)) { 
-            let custId = this.customerId;
-            let contId = this.contactId;
+          if(this.contactId && (this.contactId != this.$store.getters.contact.id)) { 
+            var custId = this.customerId;
+            var contId = this.contactId;
             this.$store.dispatch('loadContact', {customerId: custId, contactId: contId, vm: this}).then(() => {
                   // contact loaded
             });
           }
+        },
+
+        deleteContact() {
+          var cont = this.contact;
+          this.$store.dispatch('deleteContact', {cont, vm: this}).then(() => {
+            this.$router.push("/customer/" + this.customerId);
+          });
+        },
+
+        postForm() {
+
+          this.$store.commit('showLoader',true);
+          var cont = this.contact;
+          if(this.contactId) {
+            this.$store.dispatch('editContact', {cont, vm: this}).then(() => {
+                this.$store.commit('showLoader',false);
+                this.$router.push("/customer/" + this.customerId);
+            });  
+          } else {
+            cont.custid = this.customerId;
+            this.$store.dispatch('addContact', {cont, vm: this}).then(() => {
+                this.$store.commit('showLoader',false);
+                this.$router.push("/customer/" + this.customerId);
+            });  
+          }  
         }
-    },
+    },    
     mounted() {
-      this.loadContact(); 
+
+      if(this.contactId) {
+        this.loadContact(); 
+      } else {
+        this.$store.dispatch('resetContact');
+      }
     }
 };
 </script>

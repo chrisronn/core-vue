@@ -130,12 +130,8 @@ export default {
             });    
         }
     },
-    created() {
-
-        this.$store.dispatch('showSidebar', false);   
-
-    },
     mounted() {
+        this.$store.dispatch('showSidebar', false); 
         this.$store.dispatch('resetCustomer');
         this.$store.dispatch('resetContact');
     } 

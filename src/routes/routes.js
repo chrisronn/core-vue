@@ -52,6 +52,11 @@ const routes = [
               component: CustomerContactList,
             },
             {
+              path: 'contact/create',
+              name: 'CustomerContactCreate',
+              component: CustomerContact,
+            },
+            {
               path: 'contact/:contactId',
               name: 'CustomerContact',
               component: CustomerContact,

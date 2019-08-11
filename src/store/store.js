@@ -201,7 +201,7 @@ export const store = new Vuex.Store({
 
         },
 
-        loadContact({ commit, dispatch }, { customerId, contactId, vm }) {
+        loadContact({ commit, dispatch, getters }, { customerId, contactId, vm }) {
 
             localStorage.setItem('customerId', customerId);
             localStorage.setItem('contactId', contactId);
@@ -230,45 +230,84 @@ export const store = new Vuex.Store({
 
                 } else {
       
-                    url = vm.$dataUrlContactReadOne;
+                    if (getters.contacts.length > 0) {
 
-                    vm.axios
-                        .get(url)
-                        .then(response => {
-
-                            if (response.data.length > 0) {
-                                
-                                var cont = response.data.find(function (el) {
-                                    return el.id == contactId;
-                                });
-                                if (cont) {
-                                    commit('setContact', cont);
-                                }                                
-                            }
-                            resolve();
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            reject();
-                        });
-
-                    /*
-                    if (getters.contacts.length > 0) {                                
-                        
-                        console.log("Contacts: " + getters.contacts.length)
-                        
                         var cont = getters.contacts.find(function (el) {
                             return el.id == contactId;
                         });
                         if (cont) {
                             commit('setContact', cont);
                         }
+                        resolve();
+
+                    } else {
+
+                        url = vm.$dataUrlContactReadOne;
+
+                        vm.axios
+                            .get(url)
+                            .then(response => {
+
+                                if (response.data.length > 0) {
+                                    
+                                    var cont = response.data.find(function (el) {
+                                        return el.id == contactId;
+                                    });
+                                    if (cont) {
+                                        commit('setContact', cont);
+                                    }                                
+                                }
+                                resolve();
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                reject();
+                            });
                     }
-                    resolve();
-                    */
                 }
             
             });
+        },
+
+        deleteContact({commit, dispatch, getters}, {cont, vm}) {
+
+            localStorage.setItem('cont', cont);
+            localStorage.setItem('vm', vm);
+
+            return new Promise((resolve, reject) => {
+               
+                if (vm.$useExternalApi == "true") {
+                
+                    var url = vm.$dataUrlContactDelete + cont.custid + vm.$dataUrlContactKey + cont.id;
+                    var params = new URLSearchParams();
+
+                    params.append('_method', "DELETE");
+
+                    vm.axios
+                        .post(url, params)
+                        .then(response => {                        
+                            console.log("deleted: " + response);
+                            dispatch('resetContact');
+                            var contactList = getters.contacts;
+                            contactList = _.without(contactList, cont);
+                            commit('setContacts', contactList);
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+                    
+                } else {
+
+                    dispatch('resetContact');
+                    var contactList = getters.contacts;
+                    contactList = _.without(contactList, cont);
+                    commit('setContacts', contactList);
+                    resolve();
+                }
+            })
+  
         },
 
         addCustomer({ dispatch, commit }, { cust, cont, vm }) {
@@ -329,6 +368,166 @@ export const store = new Vuex.Store({
                     }, 1000)
                 }
             })
+        },
+
+        editCustomer({ dispatch, commit }, { cust, vm }) {
+
+            localStorage.setItem('cust', cust);
+            localStorage.setItem('vm', vm);
+                        
+            return new Promise((resolve, reject) => {
+               
+                if (vm.$useExternalApi == "true") {
+                
+                    var url = vm.$dataUrlCustomerUpdate + cust.id;
+                    var params = new URLSearchParams();
+
+                    params.append('_method', "PUT");
+                    params.append('name', cust.name);
+                    params.append('address', cust.address);
+                    params.append('zipcode', cust.zipcode);
+                    params.append('city', cust.city);
+
+                    vm.axios
+                        .post(url, params)
+                        .then(response => {                        
+                            console.log("updated: " + response);
+                            commit('setCustomer', cust);
+                            dispatch('updateCustomers', cust);
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+                    
+                } else {
+
+                    commit('setCustomer', cust);
+                    dispatch('updateCustomers', cust);
+                    resolve();
+                }
+            })
+        },
+
+        deleteCustomer({commit, dispatch, getters}, {cust, vm}) {
+
+            localStorage.setItem('cust', cust);
+            localStorage.setItem('vm', vm);
+
+            return new Promise((resolve, reject) => {
+               
+                if (vm.$useExternalApi == "true") {
+                
+                    var url = vm.$dataUrlCustomerDelete + cust.id;
+                    var params = new URLSearchParams();
+
+                    params.append('_method', "DELETE");
+
+                    vm.axios
+                        .post(url, params)
+                        .then(response => {                        
+                            console.log("deleted: " + response);
+                            dispatch('resetCustomer');
+                            var customerList = getters.customers.filter(function (e) {
+                                return e.id !== cust.id;
+                            });
+                            commit('setCustomers', customerList);
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+                    
+                } else {
+
+                    dispatch('resetCustomer');                    
+                    var customerList = getters.customers.filter(function (e) {
+                        return e.id !== cust.id;
+                    });                    
+                    commit('setCustomers', customerList);
+                    resolve();
+                }
+            })
+  
+        },
+
+        updateCustomers({ commit, getters }, cust) {
+
+            var customerList = getters.customers;
+            
+            customerList.some(function(obj){
+                if (obj.id === cust.id) {
+                    obj.name = cust.name;
+                    obj.address = cust.address;
+                    obj.zipcode = cust.zipcode;
+                    obj.city = cust.city;
+                    return true;
+                }
+            });
+            commit('setCustomers', customerList);
+        },
+
+        editContact({ dispatch, commit }, { cont, vm }) {
+
+            localStorage.setItem('cont', cont);
+            localStorage.setItem('vm', vm);
+                        
+            cont.fullname = cont.firstname + " " + cont.lastname;
+
+            return new Promise((resolve, reject) => {
+               
+                if (vm.$useExternalApi == "true") {
+                
+                    var url = vm.$dataUrlContactUpdate + cont.custid + vm.$dataUrlContactKey + cont.id;
+                    var params = new URLSearchParams();
+
+                    params.append('_method', "PUT");
+                    params.append('firstname', cont.firstname);
+                    params.append('lastname', cont.lastname);
+                    params.append('phone', cont.phone);
+                    params.append('mobilephone', cont.mobilephone);
+                    params.append('email', cont.email);
+
+                    vm.axios
+                        .post(url, params)
+                        .then(response => {                        
+                            console.log("updated: " + response);
+                            commit('setContact', cont);
+                            dispatch('updateContacts', cont);
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+                    
+                } else {
+
+                    commit('setContact', cont);
+                    dispatch('updateContacts', cont);
+                    resolve();
+                }
+            })
+        },
+
+        updateContacts({ commit, getters }, cont) {
+
+            var contactList = getters.contacts;
+            
+            contactList.some(function(obj){
+                if (obj.id === cont.id) {
+                    obj.fullname = cont.fullname;
+                    obj.firstname = cont.firstname;
+                    obj.lastname = cont.lastname;
+                    obj.phone = cont.phone;
+                    obj.mobilephone = cont.mobilephone;
+                    obj.email = cont.email;
+                    return true;
+                }
+            });
+            commit('setContacts', contactList);
         },
 
         addContact({ commit }, { cont, vm }) {

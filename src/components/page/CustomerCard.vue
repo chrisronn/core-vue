@@ -11,29 +11,13 @@
               <i class="fas fa-info-circle fa-fw"></i> Information
             </h3>
             <div class="card-tools">
-              <router-link class="btn btn-tool" :to="{name: 'CustomerEdit', params: {customerId: customerId}}">
+              <router-link class="btn btn-tool" title="Editera" :to="{name: 'CustomerEdit', params: {customerId: customerId}}">
                 <i class="fas fa-pencil-alt"></i>
               </router-link>
-              <button
-                class="btn btn-tool box-toggle"
-                data-boxid="info"
-                data-boxtype="standard"
-                data-boxname="info"
-                data-widget="collapse"
-                style
-              >
+              <button class="btn btn-tool box-toggle" title="Ta bort" data-toggle="modal" data-target="#genericModal">
                 <i class="fas fa-chevron-up"></i>
               </button>
-              <button
-                class="btn btn-tool box-remove"
-                data-boxid="info"
-                data-boxtype="standard"
-                data-boxname="info"
-                data-msg="Vill du ta bort boxen? Du kan återställa den igen via inställningarna i menyn."
-                data-toggle="tooltip"
-                title="Ta bort"
-                style
-              >
+              <button class="btn btn-tool box-remove" title="Ta bort" data-toggle="modal" data-target="#genericModal">
                 <i class="fas fa-times"></i>
               </button>
             </div>
@@ -76,38 +60,16 @@
               <i class="fas fa-user fa-fw"></i> Kontakter
             </h3>
             <div class="card-tools">
-              <a
-                href="/"
-                target
-                class="btn btn-tool"
-                data-toggle="tooltip"
-                title="Ny"
-              >
+              <router-link class="btn btn-tool" title="Ny kontakt" :to="{name: 'CustomerContactCreate'}">
                 <i class="fas fa-plus"></i>
-              </a>
-              <router-link class="btn btn-tool" :to="{name: 'CustomerContactList', params: {customerId: customerId}}">
+              </router-link>
+              <router-link class="btn btn-tool" title="Kontakter" :to="{name: 'CustomerContactList', params: {customerId: customerId}}">
                  <i class="fas fa-folder-open"></i>
               </router-link>
-              <button
-                class="btn btn-tool box-toggle"
-                data-boxid="contacts"
-                data-boxtype="standard"
-                data-boxname="contacts"
-                data-widget="collapse"
-                style
-              >
+              <button class="btn btn-tool box-toggle" title="Ta bort" data-toggle="modal" data-target="#genericModal">
                 <i class="fas fa-chevron-up"></i>
               </button>
-              <button
-                class="btn btn-tool box-remove"
-                data-boxid="contacts"
-                data-boxtype="standard"
-                data-boxname="contacts"
-                data-msg="Vill du ta bort boxen? Du kan återställa den igen via inställningarna i menyn."
-                data-toggle="tooltip"
-                title="Ta bort"
-                style
-              >
+              <button class="btn btn-tool box-remove" title="Ta bort" data-toggle="modal" data-target="#genericModal">
                 <i class="fas fa-times"></i>
               </button>
             </div>
@@ -149,10 +111,7 @@
         return this.$store.getters.contacts;
       }
     },
-    props: ["customerId"],
-    mounted() {
-        console.log("mounted Card: " + this.customerId)
-    }
+    props: ["customerId"]
   };
 </script>
 

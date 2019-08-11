@@ -68,15 +68,15 @@ export default {
   methods: {
 
     loadCustomers () {
-      
       if(this.$store.getters.customers.length  < 1) {
         this.$store.commit('showLoader',true);
         this.$store.dispatch('loadCustomers', {vm: this}).then(() => {
-              this.$store.commit('showLoader',false);
+            this.$store.commit('showLoader',false);
         });       
       }
     }
   },
+  
   created: function () {
 
     this.$store.dispatch('showSidebar', false);   
