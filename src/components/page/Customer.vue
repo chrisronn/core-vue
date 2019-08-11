@@ -5,7 +5,7 @@
 
     <div class="cardpage-top border-bottom">
 
-      <button class="btn btn-sm btn-default main-sidebar-toggler" @click="toggleSidebarForce">
+      <button class="btn btn-sm btn-default main-sidebar-toggler" @click="openSidebar">
         <i class="fas fa-ellipsis-h"></i>
       </button>
 
@@ -25,7 +25,6 @@
 
     <section class="content">
 
-
       <div class="container-fluid">
 
         <router-view></router-view>              
@@ -38,7 +37,6 @@
 <script>
 
 import ContentLeft from '../layout/ContentLeft.vue'
-import _ from 'lodash';
 
 export default {
     name: 'Customer',
@@ -47,59 +45,6 @@ export default {
     }, 
     data () {      
       return {}
-    },
-    created: function () {
-        this.$store.commit('toggleSidebar', true);
-    },
-    methods: {
-      toggleSidebarForce() {
-        this.$store.commit('toggleSidebarForce', true);
-      },
-      getCustomer() {
-        if(this.customerId) {          
-          var id = this.customerId;
-
-          var url = this.$dataUrlCustomerReadOne;
-          if(this.$useExternalApi=="true") {
-            url += id;
-            // TODO: implement later
-          } else {
-            this.axios
-            .get(url)
-            .then(response => {
-              if(response.data.length > 0) {
-                var customerInList = response.data.find(function (el) {
-                    return el.id==id;
-                });
-                if(customerInList) {          
-                  this.$store.commit('setCustomer', customerInList);
-                  return customerInList;
-                }
-              }
-            })
-            .catch(error => {
-              console.log(error);              
-            });
-          } 
-        }  
-        this.$store.dispatch('resetCustomer');
-        return this.$store.getters.customer;
-      },
-      fetchContacts() {
-        if(this.customerId) {  
-          var id = this.customerId;        
-          var url = this.$dataUrlContactRead;
-          this.axios
-          .get(url)
-          .then(response => {
-            let conts = _.filter(response.data, { 'custid': id });
-            this.$store.commit('setContacts', conts)
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        }
-      }
     },
     computed: {
 
@@ -111,10 +56,39 @@ export default {
       }
     },
     props: ["customerId"],
+    methods: {
+
+      openSidebar() {
+        this.$store.dispatch('openSidebar', true);
+      },
+
+      loadCustomer() {
+
+        if(this.customerId.length > 0 && (this.customerId != this.$store.getters.customer)) { 
+          let id = this.customerId;
+          this.$store.dispatch('loadCustomer', {customerId: id, vm: this}).then(() => {
+                // customer loaded
+          });
+        }
+      },
+
+      loadContacts() {
+
+        if(this.customerId.length > 0 && (this.customerId != this.$store.getters.customer)) {  
+          let id = this.customerId;
+          this.$store.dispatch('loadContacts', {customerId: id, vm: this}).then(() => {
+                // contacts loaded
+          });
+        }
+      }
+    },
+    created: function () {
+        this.$store.dispatch('showSidebar',true);
+    },
     mounted() {
 
-      this.getCustomer(); 
-      this.fetchContacts(); 
+      this.loadCustomer(); 
+      this.loadContacts(); 
       
     }
 }

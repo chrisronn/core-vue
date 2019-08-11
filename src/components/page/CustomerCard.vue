@@ -136,20 +136,20 @@
 </template>
 
 <script>
-export default {
-  name: "CustomerCard",
-  data() {
-    return {};
-  },
-  computed: {
-    customer: function() {
-      return this.$store.getters.customer;
+  export default {
+    name: "CustomerCard",
+    data() {
+      return {};
     },
-    contacts: function() {
-      return this.$store.getters.contacts;
+    computed: {
+      customer: function() {
+        return this.$store.getters.customer;
+      },
+      contacts: function() {
+        return this.$store.getters.contacts;
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>

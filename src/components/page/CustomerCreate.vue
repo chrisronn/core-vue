@@ -121,16 +121,18 @@ export default {
     methods: {
 
         postForm() {
+            this.$store.commit('showLoader',true);
             let cust = this.customer;
             let cont = this.contact;
             this.$store.dispatch('addCustomer', {cust, cont, vm: this}).then(() => {
+                this.$store.commit('showLoader',false);
                 this.$router.push("/customer/" + this.$store.getters.customer.id);
             });    
         }
     },
     created() {
 
-        this.$store.commit('toggleSidebar', false);   
+        this.$store.dispatch('showSidebar', false);   
 
     },
     mounted() {

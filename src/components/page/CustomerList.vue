@@ -65,21 +65,24 @@ export default {
   },
   methods: {
 
-    getCustomers () {
-
-        if(this.$store.getters.customers.length  < 1) {
-          this.$store.dispatch('loadCustomers', { vm: this });          
-        }
+    loadCustomers () {
+      
+      if(this.$store.getters.customers.length  < 1) {
+        this.$store.commit('showLoader',true);
+        this.$store.dispatch('loadCustomers', {vm: this}).then(() => {
+              this.$store.commit('showLoader',false);
+        });       
+      }
     }
   },
   created: function () {
 
-    this.$store.commit('toggleSidebar', false);   
+    this.$store.dispatch('showSidebar', false);   
     
   },
   mounted() {
 
-     this.getCustomers(); 
+     this.loadCustomers(); 
 
   }
  

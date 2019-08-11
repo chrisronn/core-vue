@@ -3,11 +3,12 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import _ from 'lodash';
+
 export const store = new Vuex.Store({
 
     state: {
         loader: false,
-        layoutSidebarOpen: false,
         layoutSidebarClass: "noSideMenu",
         layoutContentStyle: {},
         layoutSidebarStyle: {},
@@ -37,50 +38,33 @@ export const store = new Vuex.Store({
         addContact(state, data) {
             state.contacts.push(data);
         },
-        startLoader(state) {
-            state.loader = true;
+        showLoader(state, data) {
+            state.loader = data;
         },
-        stopLoader(state) {
-            state.loader = false;
+        setContentStyle(state, data) {
+            state.layoutContentStyle = data;
         },
-        setLayoutHeights(state, { contentHeight, sidebarHeight }) {
-
-            localStorage.setItem('contentHeight', contentHeight)
-            localStorage.setItem('sidebarHeight', sidebarHeight)
-
-            state.layoutContentStyle = { 'min-height': contentHeight + 'px' };
-            state.layoutSidebarStyle = { 'min-height': sidebarHeight + 'px' };
+        setSidebarClass(state, data) {
+            state.layoutSidebarClass = data;
         },
-        toggleSidebar(state, status) {
-            state.layoutSidebarOpen = status;      
-            if(status) {
-                state.layoutSidebarClass = 'hold-transition sidebar-mini sidebar-collapse';
-            } else {
-                state.layoutSidebarClass = 'noSideMenu';
-            }      
+        setSidebarStyle(state, data) {
+            state.layoutSidebarStyle = data;
         },
-        toggleSidebarForce(state, status) {
-            if(status) {
-                state.layoutSidebarClass = 'sidebar-mini sidebar-open';
-            } else {
-                state.layoutSidebarClass = 'nhold-transition sidebar-mini sidebar-collapse';
-            }  
-        },    
-        setContentRight(state, content) {
-            state.layoutContentRightType = content;
+        setContentRight(state, data) {
+            state.layoutContentRightType = data;
         },
-        toggleContentRight(state, status) {
-            state.layoutContentRightOpen = status;
+        toggleContentRight(state, data) {
+            state.layoutContentRightOpen = data;
         }
-    },    
+    },
     actions: {
 
         resetCustomer({ commit }) {
 
             let cust = {
-                "id": "",        
+                "id": "",
                 "name": "",
-                "address": "",        
+                "address": "",
                 "zipcode": "",
                 "city": ""
             }
@@ -89,11 +73,11 @@ export const store = new Vuex.Store({
 
         resetContact({ commit }) {
 
-            let cont= {
-                "id": "",  
-                "custid": "",       
+            let cont = {
+                "id": "",
+                "custid": "",
                 "firstname": "",
-                "lastname": "",        
+                "lastname": "",
                 "phone": "",
                 "mobilephone": "",
                 "email": ""
@@ -103,33 +87,129 @@ export const store = new Vuex.Store({
 
         loadCustomers({ commit }, { vm }) {
 
-            commit('startLoader');  
-
             var url = vm.$dataUrlCustomerRead;
 
-            vm.axios
-            .get(url)
-            .then(response => {                    
-                commit('setCustomers', response.data);
-                commit('stopLoader');
-            })
-            .catch(error => {
-                commit('stopLoader');
-                console.log(error);
+            return new Promise((resolve, reject) => {
+
+                vm.axios
+                    .get(url)
+                    .then(response => {
+                        commit('setCustomers', response.data);
+                        resolve();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject();
+                    });
             });
         },
 
-        addCustomer({ dispatch, commit }, { cust, cont, vm }) {
+        loadCustomer({ dispatch, commit }, { customerId, vm }) {
+
+            localStorage.setItem('customerId', customerId);
+            localStorage.setItem('vm', vm);
+
+            var url = "";
+
+            return new Promise((resolve, reject) => {
+
+                dispatch('resetCustomer');
+                
+                if (vm.$useExternalApi == "true") {
+
+                    url = vm.$dataUrlCustomerReadOne + customerId;
+
+                    vm.axios
+                        .get(url)
+                        .then(response => {
+                            commit('setCustomer', response.data);
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+
+                } else {
+      
+                    url = vm.$dataUrlCustomerReadOne;
+
+                    vm.axios
+                        .get(url)
+                        .then(response => {
+                            if(response.data.length > 0) {
+                                var cust = response.data.find(function (el) {
+                                    return el.id==customerId;
+                                });
+                                if(cust) {          
+                                  commit('setCustomer', cust);
+                                }
+                            }
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+                }
+            });
+        },
+
+        loadContacts({ commit }, { customerId, vm }) {
+
+            localStorage.setItem('customerId', customerId);
+            localStorage.setItem('vm', vm);
             
-            commit('startLoader');
+            var url = "";
+            
+            return new Promise((resolve, reject) => {
+
+                commit('setContacts', []);
+
+                if (vm.$useExternalApi == "true") {
+
+                    url = vm.$dataUrlContactRead + customerId + vm.$dataUrlContactKey;
+
+                    vm.axios
+                        .get(url)
+                        .then(response => {
+                            commit('setContacts', response.data);
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+
+                } else {
+      
+                    url = vm.$dataUrlContactRead;
+
+                    vm.axios
+                        .get(url)
+                        .then(response => {
+                            let conts = _.filter(response.data, { 'custid': customerId });
+                            commit('setContacts', conts);
+                            resolve();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
+                }
+            });
+
+        },
+
+        addCustomer({ dispatch, commit }, { cust, cont, vm }) {
 
             localStorage.setItem('cust', cust);
-            localStorage.setItem('cont', cont);  
-            localStorage.setItem('vm', vm); 
+            localStorage.setItem('cont', cont);
+            localStorage.setItem('vm', vm);
                         
             return new Promise((resolve, reject) => {
                
-                if(vm.$useExternalApi=="true") {
+                if (vm.$useExternalApi == "true") {
                 
                     var url = vm.$dataUrlCustomerCreate;
                     var params = new URLSearchParams();
@@ -140,59 +220,54 @@ export const store = new Vuex.Store({
                     params.append('city', cust.city);
 
                     vm.axios
-                    .post(url, params)
-                    .then(response => {
+                        .post(url, params)
+                        .then(response => {
                         
-                        // add customer
-                        cust.id = response.response.data.id;
-                        commit('setCustomer', cust);
-                        commit('addCustomer', cust);
+                            // add customer
+                            cust.id = response.response.data.id;
+                            commit('setCustomer', cust);
+                            commit('addCustomer', cust);
 
-                        // add contact
-                        cont.custid = cust.id;
-                        dispatch('addContact', cont).then(() => {
-                            commit('stopLoader');
-                            resolve();
-                        })                        
-                    })
-                    .catch(error => {
-                        commit('stopLoader');
-                        console.log(error);
-                        reject();
-                    });
+                            // add contact
+                            cont.custid = cust.id;
+                            dispatch('addContact', cont).then(() => {
+                                resolve();
+                            })
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reject();
+                        });
                     
                 } else {
 
                     // add customer
-                    let custId = (Math.floor(Math.random() * 10000) + 2000).toString();                    
-                    cust.id = custId.toString();     
+                    let custId = (Math.floor(Math.random() * 10000) + 2000).toString();
+                    cust.id = custId.toString();
                     commit('setCustomer', cust);
                     commit('addCustomer', cust);
 
                     // add contact
-                    cont.custid = cust.id  
+                    cont.custid = cust.id
                     setTimeout(() => {
-                        dispatch('addContact', {cont,vm}).then(() => {
-                            commit('stopLoader');
+                        dispatch('addContact', { cont, vm }).then(() => {
                             resolve();
-                        })  
-                    }, 1000)    
+                        })
+                    }, 1000)
                 }
             })
         },
 
-        addContact({ commit }, {cont,vm}) {
+        addContact({ commit }, { cont, vm }) {
             
-            commit('startLoader');
-
-            localStorage.setItem('cont', cont);  
-            localStorage.setItem('vm', vm); 
+            localStorage.setItem('cont', cont);
+            localStorage.setItem('vm', vm);
 
             return new Promise((resolve, reject) => {
 
                 if (vm.$useExternalApi == "true") {
                     
-                    var url = this.$dataUrlContactCreate + cont.custid + this.$dataUrlContactKey;
+                    var url = vm.$dataUrlContactCreate + cont.custid + vm.$dataUrlContactKey;
                     var params = new URLSearchParams();
 
                     params.append('firstname', cont.firstname);
@@ -204,17 +279,13 @@ export const store = new Vuex.Store({
                     vm.axios
                         .post(url, params)
                         .then(response => {
-                        
                             cont.id = response.data.id;
                             cont.fullname = cont.firstname + " " + cont.lastname;
                             commit('setContact', cont);
                             commit('addContact', cont);
-
-                            commit('stopLoader');
                             resolve();
                         })
                         .catch(error => {
-                            commit('stopLoader');
                             console.log(error);
                             reject();
                         });
@@ -227,12 +298,35 @@ export const store = new Vuex.Store({
 
                     commit('setContact', cont);
                     commit('addContact', cont);
-
-                    commit('stopLoader');
                     resolve();
                 }
             });
-        }
+        },
+
+        showSidebar({ commit }, status) {
+            if (status) {
+                commit('setSidebarClass', 'hold-transition sidebar-mini sidebar-collapse');
+            } else {
+                commit('setSidebarClass', 'noSideMenu');
+            }
+        },
+
+        openSidebar({ commit }, status) {
+            if (status) {
+                commit('setSidebarClass', 'sidebar-mini sidebar-open');
+            } else {
+                commit('setSidebarClass', 'hold-transition sidebar-mini sidebar-collapse');
+            }
+        },
+
+        setLayoutHeights({ commit }, { contentHeight, sidebarHeight }) {
+            
+            localStorage.setItem('contentHeight', contentHeight)
+            localStorage.setItem('sidebarHeight', sidebarHeight)
+
+            commit('setContentStyle', { 'min-height': contentHeight + 'px' });
+            commit('setSidebarStyle', { 'min-height': sidebarHeight + 'px' });
+        },
         
     },
     getters: {
@@ -243,7 +337,6 @@ export const store = new Vuex.Store({
         loader: state => state.loader,
         layoutContentStyle: state => state.layoutContentStyle,
         layoutSidebarStyle: state => state.layoutSidebarStyle,
-        layoutSidebarOpen: state => state.layoutSidebarOpen,
         layoutSidebarClass: state => state.layoutSidebarClass,
         layoutContentRightOpen: state => state.layoutContentRightOpen,
         layoutContentRightType: state => state.layoutContentRightType

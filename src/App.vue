@@ -40,7 +40,7 @@ export default {
       var contentHeight = max - siteHeaderHeight - siteFooterHeight - offset;
       var sidebarHeight = max - siteHeaderHeight - offset;
 
-      this.$store.commit('setLayoutHeights', {contentHeight, sidebarHeight});
+      this.$store.dispatch('setLayoutHeights', {contentHeight, sidebarHeight});
     }
   },  
   mounted() {

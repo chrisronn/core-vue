@@ -42,7 +42,7 @@ export default {
     }, 
     methods: {
         resetOverlay() {
-            this.$store.commit('toggleSidebarForce', false);
+            this.$store.dispatch('openSidebar', false);
         }
     },
     computed: {
