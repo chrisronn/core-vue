@@ -173,6 +173,7 @@ export const store = new Vuex.Store({
                     vm.axios
                         .get(url)
                         .then(response => {
+
                             commit('setContacts', response.data);
                             resolve();
                         })
@@ -316,7 +317,7 @@ export const store = new Vuex.Store({
             localStorage.setItem('cont', cont);
             localStorage.setItem('vm', vm);
                         
-            commit('resetCustomer');
+            dispatch('resetCustomer');
             commit('setContacts', []);
 
             return new Promise((resolve, reject) => {
@@ -324,6 +325,7 @@ export const store = new Vuex.Store({
                 if (vm.$useExternalApi == "true") {
                 
                     var url = vm.$dataUrlCustomerCreate;
+
                     var params = new URLSearchParams();
 
                     params.append('name', cust.name);
@@ -336,13 +338,13 @@ export const store = new Vuex.Store({
                         .then(response => {
                         
                             // add customer
-                            cust.id = response.response.data.id;
+                            cust.id = response.data.id;
                             commit('setCustomer', cust);
                             commit('addCustomer', cust);
 
                             // add contact
                             cont.custid = cust.id;
-                            dispatch('addContact', cont).then(() => {
+                            dispatch('addContact',  { cont, vm}).then(() => {
                                 resolve();
                             })
                         })
@@ -362,7 +364,7 @@ export const store = new Vuex.Store({
                     // add contact
                     cont.custid = cust.id
                     setTimeout(() => {
-                        dispatch('addContact', { cont, vm }).then(() => {
+                        dispatch('addContact', { cont, vm}).then(() => {
                             resolve();
                         })
                     }, 1000)
@@ -551,6 +553,7 @@ export const store = new Vuex.Store({
                     vm.axios
                         .post(url, params)
                         .then(response => {
+
                             cont.id = response.data.id;
                             cont.fullname = cont.firstname + " " + cont.lastname;
                             commit('setContact', cont);
