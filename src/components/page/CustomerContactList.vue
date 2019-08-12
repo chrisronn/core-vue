@@ -47,7 +47,7 @@ export default {
         sortable: ['id', 'fullname', 'mobilephone', 'email'],
         filterable: false,
         texts: {
-          count: "Visar {from} till {to} av {count} rader|{count} rader|En rad",
+          count: "Visar {from} till {to} av {count} rader|{count} rader|1 rad",
           first: 'Första',
           last: 'Sista',
           filter: "Filtrera:",

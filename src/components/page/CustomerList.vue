@@ -49,7 +49,7 @@ export default {
         sortable: ['id', 'name', 'address', 'city'],
         filterable: ['id', 'name', 'address', 'city'],
         texts: {
-          count: "Visar {from} till {to} av {count} rader|{count} rader|En rad",
+          count: "Visar {from} till {to} av {count} rader|{count} rader|1 rad",
           first: 'Första',
           last: 'Sista',
           filter: "Filtrera:",
@@ -70,9 +70,13 @@ export default {
     loadCustomers () {
       if(this.$store.getters.customers.length  < 1) {
         this.$store.commit('showLoader',true);
-        this.$store.dispatch('loadCustomers', {vm: this}).then(() => {
+        this.$store.dispatch('loadCustomers', {vm: this})
+        .then(() => {
             this.$store.commit('showLoader',false);
-        });       
+        })
+        .catch(error => {
+          console.log(error);
+        });   
       }
     }
   },

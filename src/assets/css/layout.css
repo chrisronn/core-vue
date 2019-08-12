@@ -2094,7 +2094,7 @@ legend {
     margin: auto;
     width: 90%;
     z-index: 999999;
-    display: none;
+    /*display: none;*/
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
     outline: 0;

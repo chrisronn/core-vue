@@ -93,16 +93,24 @@ export default {
           if(this.contactId && (this.contactId != this.$store.getters.contact.id)) { 
             var custId = this.customerId;
             var contId = this.contactId;
-            this.$store.dispatch('loadContact', {customerId: custId, contactId: contId, vm: this}).then(() => {
+            this.$store.dispatch('loadContact', {customerId: custId, contactId: contId, vm: this})
+            .then(() => {
                   // contact loaded
+            })
+            .catch(error => {
+              console.log(error);
             });
           }
         },
 
         deleteContact() {
           var cont = this.contact;
-          this.$store.dispatch('deleteContact', {cont, vm: this}).then(() => {
+          this.$store.dispatch('deleteContact', {cont, vm: this})
+          .then(() => {
             this.$router.push("/customer/" + this.customerId);
+          }) 
+          .catch(error => {
+            console.log(error);
           });
         },
 
@@ -111,16 +119,24 @@ export default {
           this.$store.commit('showLoader',true);
           var cont = this.contact;
           if(this.contactId) {
-            this.$store.dispatch('editContact', {cont, vm: this}).then(() => {
+            this.$store.dispatch('editContact', {cont, vm: this})
+            .then(() => {
                 this.$store.commit('showLoader',false);
                 this.$router.push("/customer/" + this.customerId);
-            });  
+            })
+            .catch(error => {
+              console.log(error);
+            });
           } else {
             cont.custid = this.customerId;
-            this.$store.dispatch('addContact', {cont, vm: this}).then(() => {
+            this.$store.dispatch('addContact', {cont, vm: this})
+            .then(() => {
                 this.$store.commit('showLoader',false);
                 this.$router.push("/customer/" + this.customerId);
-            });  
+            })
+            .catch(error => {
+              console.log(error);
+            });
           }  
         }
     },    

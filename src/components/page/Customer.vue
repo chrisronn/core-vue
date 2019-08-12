@@ -66,8 +66,12 @@ export default {
 
         if(this.customerId.length > 0 && (this.customerId != this.$store.getters.customer.id)) { 
           let id = this.customerId;
-          this.$store.dispatch('loadCustomer', {customerId: id, vm: this}).then(() => {
+          this.$store.dispatch('loadCustomer', {customerId: id, vm: this})
+          .then(() => {
                 // customer loaded
+          })
+          .catch(error => {
+            console.log(error);
           });
         }
       },
@@ -76,8 +80,12 @@ export default {
 
         if(this.customerId.length > 0 && (this.customerId != this.$store.getters.customer.id)) {  
           let id = this.customerId;
-          this.$store.dispatch('loadContacts', {customerId: id, vm: this}).then(() => {
+          this.$store.dispatch('loadContacts', {customerId: id, vm: this})
+          .then(() => {
                 // contacts loaded
+          })
+          .catch(error => {
+            console.log(error);
           });
         }
       }

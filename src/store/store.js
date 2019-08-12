@@ -221,6 +221,9 @@ export const store = new Vuex.Store({
                     vm.axios
                         .get(url)
                         .then(response => {
+
+                            console.log("Contact: " + JSON.stringify(response.data));
+
                             commit('setContact', response.data);
                             resolve();
                         })
@@ -289,8 +292,9 @@ export const store = new Vuex.Store({
                         .then(response => {                        
                             console.log("deleted: " + response);
                             dispatch('resetContact');
-                            var contactList = getters.contacts;
-                            contactList = _.without(contactList, cont);
+                            var contactList = getters.contacts.filter(function (e) {
+                                return e.id !== cont.id;
+                            });
                             commit('setContacts', contactList);
                             resolve();
                         })
@@ -302,8 +306,9 @@ export const store = new Vuex.Store({
                 } else {
 
                     dispatch('resetContact');
-                    var contactList = getters.contacts;
-                    contactList = _.without(contactList, cont);
+                    var contactList = getters.contacts.filter(function (e) {
+                        return e.id !== cont.id;
+                    });
                     commit('setContacts', contactList);
                     resolve();
                 }

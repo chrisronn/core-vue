@@ -83,18 +83,26 @@ export default {
 
       deleteCustomer() {
         var cust = this.customer;
-        this.$store.dispatch('deleteCustomer', {cust, vm: this}).then(() => {
+        this.$store.dispatch('deleteCustomer', {cust, vm: this})
+        .then(() => {
           this.$router.push("/customer/list");
+        })
+        .catch(error => {
+          console.log(error);
         });
       },
 
       postForm() {
           this.$store.commit('showLoader',true);
           let cust = this.customer;
-          this.$store.dispatch('editCustomer', {cust, vm: this}).then(() => {
+          this.$store.dispatch('editCustomer', {cust, vm: this})
+          .then(() => {
               this.$store.commit('showLoader',false);
               this.$router.push("/customer/" + this.$store.getters.customer.id);
-          });    
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
     },
 }
