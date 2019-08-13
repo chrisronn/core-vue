@@ -66,9 +66,11 @@ export default {
 
         if(this.customerId.length > 0 && (this.customerId != this.$store.getters.customer.id)) { 
           let id = this.customerId;
+          this.$store.commit('showLoader',true);
           this.$store.dispatch('loadCustomer', {customerId: id, vm: this})
           .then(() => {
                 // customer loaded
+                this.$store.commit('showLoader',false);
           })
           .catch(error => {
             console.log(error);

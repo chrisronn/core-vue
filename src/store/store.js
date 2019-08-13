@@ -12,13 +12,7 @@ export const store = new Vuex.Store({
         customer: {},
         contacts: [],
         contact: {},
-        user: {
-            "username": "",
-            "fullname": "",
-            "firstname": "",
-            "lastname": "",
-            "email": ""
-        },
+        user: null,
         loader: false,
         layoutSidebarClass: "noSideMenu",
         layoutContentStyle: {},

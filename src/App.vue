@@ -26,7 +26,7 @@ export default {
   methods: {
 
     loadUser () {
-      if(!this.$store.getters.user.username.length > 0) {
+      if(!this.$store.getters.user) {
         this.$store.dispatch('loadUser', {vm: this})
         .then(() => {
             // user loaded
@@ -55,13 +55,14 @@ export default {
       this.$store.dispatch('setLayoutHeights', {contentHeight, sidebarHeight});
     }
   },  
+  created() {
+    this.loadUser();
+  },
   mounted() {
     
     this.$nextTick(() => {
       //$("body").css("color","red");
-    });
-
-    this.loadUser();
+    });    
     
     this.setLayoutHeights ();
     window.addEventListener('resize', this.setLayoutHeights);   
