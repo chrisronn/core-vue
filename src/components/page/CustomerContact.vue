@@ -95,11 +95,9 @@ export default {
             var contId = this.contactId;
             this.$store.dispatch('loadContact', {customerId: custId, contactId: contId, vm: this})
             .then(() => {
-                  // contact loaded
+                // contact loaded
             })
-            .catch(error => {
-              console.log(error);
-            });
+            .catch(() => {});
           }
         },
 
@@ -109,9 +107,7 @@ export default {
           .then(() => {
             this.$router.push("/customer/" + this.customerId);
           }) 
-          .catch(error => {
-            console.log(error);
-          });
+          .catch(() => {});
         },
 
         postForm() {
@@ -124,9 +120,7 @@ export default {
                 this.$store.commit('showLoader',false);
                 this.$router.push("/customer/" + this.customerId);
             })
-            .catch(error => {
-              console.log(error);
-            });
+            .catch(() => {});
           } else {
             cont.custid = this.customerId;
             this.$store.dispatch('addContact', {cont, vm: this})
@@ -134,9 +128,7 @@ export default {
                 this.$store.commit('showLoader',false);
                 this.$router.push("/customer/" + this.customerId);
             })
-            .catch(error => {
-              console.log(error);
-            });
+            .catch(() => {});
           }  
         }
     },    

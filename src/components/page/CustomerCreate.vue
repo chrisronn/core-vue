@@ -129,9 +129,7 @@ export default {
                 this.$store.commit('showLoader',false);
                 this.$router.push("/customer/" + this.$store.getters.customer.id);
             })
-            .catch(error => {
-              console.log(error);
-            }); 
+            .catch(() => {});
         }
     },
     mounted() {

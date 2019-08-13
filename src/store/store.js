@@ -92,31 +92,32 @@ export const store = new Vuex.Store({
         resetUser({ commit }) {
 
             let usr = {
-                "username": "nana",
-                "fullname": "Namn Namn",
-                "firstname": "Namn",
-                "lastname": "Namn",
-                "email": "namn.namn@email.com"
+                "username": "",
+                "fullname": "",
+                "firstname": "",
+                "lastname": "",
+                "email": ""
             }
             commit('setUser', usr);
         },
 
-        loadUser({ dispatch }, { vm }) {
+        loadUser({ commit,dispatch }, { vm }) {
 
-            localStorage.setItem('vm', vm);
+            var url = vm.$dataUrlUserGet;
+            dispatch('resetUser');
 
-            return new Promise((resolve) => {
-                
-                if (vm.$useExternalApi == "true") {
+            return new Promise((resolve, reject) => {
 
-                    dispatch('resetUser');
-                    resolve();
-
-                } else {
-      
-                    dispatch('resetUser');
-                    resolve();
-                }
+                vm.axios
+                    .get(url)
+                    .then(response => {
+                        commit('setUser', response.data);
+                        resolve();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject();
+                    });
             });
         },
 

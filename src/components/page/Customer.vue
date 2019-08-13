@@ -69,12 +69,10 @@ export default {
           this.$store.commit('showLoader',true);
           this.$store.dispatch('loadCustomer', {customerId: id, vm: this})
           .then(() => {
-                // customer loaded
-                this.$store.commit('showLoader',false);
+              // customer loaded
+              this.$store.commit('showLoader',false);
           })
-          .catch(error => {
-            console.log(error);
-          });
+          .catch(() => {});
         }
       },
 
@@ -84,11 +82,9 @@ export default {
           let id = this.customerId;
           this.$store.dispatch('loadContacts', {customerId: id, vm: this})
           .then(() => {
-                // contacts loaded
+              // contacts loaded
           })
-          .catch(error => {
-            console.log(error);
-          });
+          .catch(() => {});
         }
       }
     },

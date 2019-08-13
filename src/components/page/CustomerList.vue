@@ -74,9 +74,7 @@ export default {
         .then(() => {
             this.$store.commit('showLoader',false);
         })
-        .catch(error => {
-          console.log(error);
-        });   
+        .catch(() => {});
       }
     }
   },

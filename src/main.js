@@ -18,6 +18,8 @@ Vue.config.productionTip = false
 Vue.prototype.$useExternalApi = process.env.VUE_APP_EXTERNAL_API
 Vue.prototype.$homeUrl = process.env.VUE_APP_URL_HOME
 
+Vue.prototype.$dataUrlUserGet = process.env.VUE_APP_URL_DATA_USER_GET
+
 Vue.prototype.$dataUrlCustomerCreate = process.env.VUE_APP_URL_DATA_CUSTOMER_CREATE
 Vue.prototype.$dataUrlCustomerRead = process.env.VUE_APP_URL_DATA_CUSTOMER_READ
 Vue.prototype.$dataUrlCustomerReadOne = process.env.VUE_APP_URL_DATA_CUSTOMER_READ_ONE

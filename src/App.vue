@@ -6,18 +6,6 @@
 
 <script>
 
-//import _ from 'lodash';
-/*
-window.$ = require('jquery')
-window.JQuery = require('jquery')
-
-var $ = require( 'jquery' );
-require( 'datatables.net' )( window, $ );
-require( 'datatables.net-bs4' )( window, $ );
-require( 'datatables.net-responsive' )( window, $ );
-require( 'datatables.net-responsive-bs4' )( window, $ );
-*/
-
 export default {
   name: 'app',
   data() {
@@ -31,9 +19,7 @@ export default {
         .then(() => {
             // user loaded
         })
-        .catch(error => {
-          console.log(error);
-        });   
+        .catch(() => {});   
       }
     },
 
