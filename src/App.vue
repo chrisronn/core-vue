@@ -25,6 +25,18 @@ export default {
   },
   methods: {
 
+    loadUser () {
+      if(!this.$store.getters.user.username.length > 0) {
+        this.$store.dispatch('loadUser', {vm: this})
+        .then(() => {
+            // user loaded
+        })
+        .catch(error => {
+          console.log(error);
+        });   
+      }
+    },
+
     setLayoutHeights () {
 
       var windowHeight = window.innerHeight;
@@ -48,6 +60,8 @@ export default {
     this.$nextTick(() => {
       //$("body").css("color","red");
     });
+
+    this.loadUser();
     
     this.setLayoutHeights ();
     window.addEventListener('resize', this.setLayoutHeights);   

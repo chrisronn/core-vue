@@ -9,8 +9,8 @@
         </div>
             
         <div class="mt-1 text-center profile-avatar-icon"><i class="fas fa-user-circle"></i></div>
-        <div class="mt-1 text-center"><strong>Per Karlsson</strong></div>
-        <div class="mt-1 text-center">per.karlsson@email.se</div>
+        <div class="mt-1 text-center"><strong>{{user.fullname}}</strong></div>
+        <div class="mt-1 text-center">{{user.email}}</div>
 
         <button class="btn btn-default btn-block mt-3" data-toggle="modal" data-target="#genericModal"><i class="fa fa-cog mr-2"></i>Inställningar</button>
 
@@ -50,9 +50,13 @@
 export default {
   name: 'SiteRight',
   computed: {
-        showContent() {
-            return this.$store.getters.layoutContentRightType;
-        }
+
+    user() {
+      return this.$store.getters.user;
+    },
+    showContent() {
+        return this.$store.getters.layoutContentRightType;
+    }
   },
   methods: {
 

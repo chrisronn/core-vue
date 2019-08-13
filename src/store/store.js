@@ -8,16 +8,23 @@ import _ from 'lodash';
 export const store = new Vuex.Store({
 
     state: {
+        customers: [],
+        customer: {},
+        contacts: [],
+        contact: {},
+        user: {
+            "username": "",
+            "fullname": "",
+            "firstname": "",
+            "lastname": "",
+            "email": ""
+        },
         loader: false,
         layoutSidebarClass: "noSideMenu",
         layoutContentStyle: {},
         layoutSidebarStyle: {},
         layoutContentRightType: "",
         layoutContentRightOpen: false,
-        customers: [],
-        customer: {},
-        contacts: [],
-        contact: {}
     },
     mutations: {
         setCustomers(state, data) {
@@ -37,6 +44,9 @@ export const store = new Vuex.Store({
         },
         addContact(state, data) {
             state.contacts.push(data);
+        },
+        setUser(state, data) {
+            state.user = data;
         },
         showLoader(state, data) {
             state.loader = data;
@@ -83,6 +93,37 @@ export const store = new Vuex.Store({
                 "email": ""
             }
             commit('setContact', cont);
+        },
+
+        resetUser({ commit }) {
+
+            let usr = {
+                "username": "nana",
+                "fullname": "Namn Namn",
+                "firstname": "Namn",
+                "lastname": "Namn",
+                "email": "namn.namn@email.com"
+            }
+            commit('setUser', usr);
+        },
+
+        loadUser({ dispatch }, { vm }) {
+
+            localStorage.setItem('vm', vm);
+
+            return new Promise((resolve) => {
+                
+                if (vm.$useExternalApi == "true") {
+
+                    dispatch('resetUser');
+                    resolve();
+
+                } else {
+      
+                    dispatch('resetUser');
+                    resolve();
+                }
+            });
         },
 
         loadCustomers({ commit }, { vm }) {
@@ -614,6 +655,7 @@ export const store = new Vuex.Store({
         customer: state => state.customer,        
         contacts: state => state.contacts,
         contact: state => state.contact,
+        user: state => state.user,
         loader: state => state.loader,
         layoutContentStyle: state => state.layoutContentStyle,
         layoutSidebarStyle: state => state.layoutSidebarStyle,

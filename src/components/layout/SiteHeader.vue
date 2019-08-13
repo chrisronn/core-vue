@@ -36,7 +36,7 @@
       </li>
       <li class="nav-item">
       <a class="nav-link" id="navprofile" href="#" @click="openProfile">
-      <i class="fas fa-user-circle"></i><span class="nav-link-text ml-2">Per Karlsson</span>
+      <i class="fas fa-user-circle"></i><span class="nav-link-text ml-2">{{user.fullname}}</span>
       </a>
       </li>
       </ul>
@@ -49,6 +49,11 @@
 <script>
 export default {
   name: 'SiteHeader',
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    }
+  },
   methods: {
 
     openSearch() {
