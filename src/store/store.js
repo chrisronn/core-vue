@@ -404,11 +404,14 @@ export const store = new Vuex.Store({
 
                     // add contact
                     cont.custid = cust.id
-                    setTimeout(() => {
-                        dispatch('addContact', { cont, vm}).then(() => {
-                            resolve();
-                        })
-                    }, 1000)
+                    dispatch('addContact', { cont, vm})
+                    .then(() => {
+                        resolve();
+                    })
+                    .catch(error => {
+                        reject();
+                    });
+                   
                 }
             })
         },
