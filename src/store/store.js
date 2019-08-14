@@ -408,7 +408,7 @@ export const store = new Vuex.Store({
                     .then(() => {
                         resolve();
                     })
-                    .catch(error => {
+                    .catch(() => {
                         reject();
                     });
                    
